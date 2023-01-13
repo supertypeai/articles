@@ -7,14 +7,6 @@ taxonomy:
         - notes
 ---
 
-<div align="center">
-<img src="../_images/digital_advertisement.jpg" alt="Ad optimization" width="65%" height="25%">
-<figure>
-<figcaption align = "center"><b>Photo by 偉宗勞 on Unsplash </b>
-</figcaption>
-</figure>
-</div>
-
 Digital advertising is a booming industry in the world, and it is expected to grow even more in the future, reaching US$701.20bn in 2023 -- more than half of which coming from mobile advertising.
 
 The Interactive Advertising Bureau (IAB) states that business that uses data to target their digital analytics achieve three times of click-through rate (CTR) over their advertising peers who have yet to use data.
@@ -60,25 +52,19 @@ In the case of our client, we did some preprocessing and enriched the data with 
 
 We then use the **app_site** to identify the top 10 apps that bring the biggest monetary value to the client, whether in the way of revenue, or one of the predefined events ("valuable event"). Different strategies are formulated to help the advertisers on the SSP to allocate advertising budget toward their respective top apps. Further analytical techniques such as scaling and clustering are used, to avoid the bias of the top apps being the ones with the most impressions. 
 
-<div align="center">
-<img src="../_images/top_occurrence.jpeg" alt="ads optimization top occurence" width="40%" height="25%">
-<img src="../_images/scaled_occurrence.jpeg" alt="ads optimization scaled occurrence" width="40.4%" height="25%">
-</div>
+![ads optimization top occurrence](/_images/top_occurrence.jpeg)
+![ads optimization scaled occurrence](/_images/top_occurrence.jpeg)
 
 Beyond that, our analysis also highlight a significant opportunity for advertisers to further improve their ad performance by taking into consideration the time where an ad impression is served ("serve time") and correlating it with the possible of a valuable event occurring ("valuable event"). We sent the analysis back to the client, and after a quick trial, notice an uptick in the conversion rate of the advertisements. Since each **valuable event** has its own distinctive pattern of occurrence and its own correlation with the **serve time** parameter, the combinatorial possibilities of targeting the right audience at the right time is exciting and reap for some multivariate analysis.
 
 It is key to communicate these analysis plainly and clearly to the client, to ensure that the outcome of your data analysis is understood and actionable. An example of our communication is "An ad serve time of 14:00 to 18:00 has the highest conversion rate for all valuable events, and the serve time extending to include 00:00 to 05:00 will yield the highest conversion rate for the install event per thousand impressions".
 
-<div align="center">
-<img src="../_images/hour_parameter.jpeg" alt="dsp optimize hour parameter" width="50%" height="25%">
-</div>
+![dsp optimize hour parameter](/_images/hour_parameter.jpeg)
 
 Other, less orthodox parameters we found include the longitude and latitude of the ad impression, and when we incorporate these into the analytics model, this opens up new perspectives on how locations affect the performance of an ad.
 
-<div align="center">
-<img src="../_images/place_parameter.jpeg" alt="This is the caption" width="45%" height="27%">
-<img src="../_images/category_parameter.jpeg" alt="This is the caption" width="44.5%" height="27%">
-</div>
+![dsp optimize place parameter](/_images/place_parameter.jpeg)
+![dsp optimize category parameter](/_images/category_parameter.jpeg)
 
 Equally as important is to not get caught up in a never-ending cycle of analysis and data exploration. Once we've identified the key parameters and test for their significance, we communicate the results to the client to move these into "real world" testing.
 
