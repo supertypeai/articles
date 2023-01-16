@@ -10,7 +10,7 @@ taxonomy:
 
 # End-to-End Machine Learning Project: Twitter Sentiment Analysis - Data Preprocessing and Model Building (Part 2)
 
-In the [previous post](https://supertype.ai/notes/twitter-sentiment-analysis-part-1/), I have explained how to collect the training data. Now, we will preprocess the collected data and use it to build a Long Short-Term Memory (LSTM) model that can predict the sentiment of a tweet.
+In the <u>[previous post](https://supertype.ai/notes/twitter-sentiment-analysis-part-1/)</u>, I have explained how to collect the training data. Now, we will preprocess the collected data and use it to build a Long Short-Term Memory (LSTM) model that can predict the sentiment of a tweet.
 
 ### Reading the Dataset
 
@@ -32,7 +32,7 @@ Let's check the distribution of the sentiment labels in the dataset.
 
 ### Text Preprocessing
 
-First, we will create a set of stopwords which contain common words that we want to remove from the tweets. Removing stopwords can reduce the size of the dataset and also minimize the noise in the dataset, however we should choose the stopwords carefully for sentiment analysis. For example, the word "not" is often regarded as a stopword, but it is actually important for sentiment analysis. We do not want the sentences "I am not happy" and "I am happy" to be treated as the same by our model. You can view the custom stopwords that we use [here](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer/blob/main/static/en_stopwords.txt). We also create an instance of `WordNetLemmatizer` from the NLTK library, which will be used to convert words into their base form while considering the context.
+First, we will create a set of stopwords which contain common words that we want to remove from the tweets. Removing stopwords can reduce the size of the dataset and also minimize the noise in the dataset, however we should choose the stopwords carefully for sentiment analysis. For example, the word "not" is often regarded as a stopword, but it is actually important for sentiment analysis. We do not want the sentences "I am not happy" and "I am happy" to be treated as the same by our model. You can view the custom stopwords that we use <u>[here](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer/blob/main/static/en_stopwords.txt)</u>. We also create an instance of `WordNetLemmatizer` from the NLTK library, which will be used to convert words into their base form while considering the context.
 
 
 ```python
@@ -46,7 +46,7 @@ import re
 stopwords = set()
 with open("/content/drive/MyDrive/static/en_stopwords.txt", "r") as file:
     for word in file:
-        stopwords.add(word.rstrip("\n"))
+        stopwords.add(word.rstrip("\\n"))
         
 lemmatizer = WordNetLemmatizer()
 ```
@@ -66,10 +66,10 @@ The text prepocessing consists of the following steps:
 ```python
 def text_preprocessing(text):
     try:
-        url_pattern = r"((http://)[^ ]*|(https://)[^ ]*|(www\.)[^ ]*)"
-        user_pattern = r"@[^\s]+"
+        url_pattern = r"((http://)[^ ]*|(https://)[^ ]*|(www\\.)[^ ]*)"
+        user_pattern = r"@[^\\s]+"
         entity_pattern = r"&.*;"
-        neg_contraction = r"n't\W"
+        neg_contraction = r"n't\\W"
         non_alpha = "[^a-z]"
         cleaned_text = text.lower()
         cleaned_text = re.sub(neg_contraction, " not ", cleaned_text)
@@ -214,12 +214,12 @@ embedding_layer = Embedding(input_dim=vocab_size,
 Now we will create our LSTM model. The model consists of the following layers:
 1) Embedding layer (converts sequences of integers into sequences of vectors)
 2) SpatialDropout1D layer (prevents overfitting by randomly deactivating neurons)
-3) LSTM layer (extracts features from the sequences of vectors while considering their order*)
+3) LSTM layer (extracts features from the sequences of vectors while considering their order)
 4) Dense layer with one neuron and sigmoid activation function (outputs the probability of the tweet being positive)
 
 The model is then compiled with the Adam optimizer and binary crossentropy loss function.
 
-*Notes: The sentences "I am *not happy* because today is *raining*" and "I am *happy* becuase today is *not raining*" would be treated the same by a model that does not consider the order of the words (e.g. Naive Bayes algorithm using a unigram bag-of-words model). However, LSTM model can recognize the difference between the two sentences.
+Notes: The sentences "I am *not happy* because today is *raining*" and "I am *happy* becuase today is *not raining*" would be treated the same by a model that does not consider the order of the words (e.g. Naive Bayes algorithm using a unigram bag-of-words model). However, LSTM model can recognize the difference between the two sentences.
 
 
 ```python
@@ -309,5 +309,5 @@ print("True Positive Rate: {:.3f}".format(tpr))
 We have performed text preprocessing and build a LSTM model that can predict the sentiment of tweets. In the next post, we will create a Streamlit app that can predict the sentiment of tweets and show some visualizations based on a given search term. Hope you enjoyed the post!
 
 ### Relevant Links
-* Project Github: [github.com/tmtsmrsl/TwitterSentimentAnalyzer](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer)  
-* Streamlit App: [twitter-sentiment.streamlit.app/](https://twitter-sentiment.streamlit.app/)
+* Project Github: <u>[github.com/tmtsmrsl/TwitterSentimentAnalyzer](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer)</u>  
+* Streamlit App: <u>[twitter-sentiment.streamlit.app/](https://twitter-sentiment.streamlit.app/)</u>
