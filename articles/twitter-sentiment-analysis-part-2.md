@@ -28,7 +28,7 @@ df = df.drop(columns=["username", "date"])
 
 Let's check the distribution of the sentiment labels in the dataset.
 
-![sentiment distribution plot](sentiment_dist.png)
+![sentiment distribution plot](/_images/sentiment_dist.png)
 
 ### Text Preprocessing
 
@@ -228,7 +228,7 @@ model.compile(loss="binary_crossentropy", optimizer="adam", metrics=["accuracy"]
 print(model.summary())
 ```
 
-![model summary table](model_summary.png)
+![model summary table](/_images/model_summary.png)
 
 Now we are ready to train our model. We set two callbacks to monitor the training process: `EarlyStopping` and `ModelCheckpoint`. The `EarlyStopping` callback will reduce overfitting by stopping the training process if the validation loss does not decrease after 3 epochs. The `ModelCheckpoint` callback will save the model whenever a new best model is found (based on the validation loss).
 
@@ -254,9 +254,9 @@ history = model.fit(
 After 10 epochs, the model stops training because we only set the epochs to 10. The accuracy and loss of the model on the training set and validation set are shown below.  The validation accuracy and loss kind of level off after 7 or 8 epochs.  
 Notice that the validation accuracy is always higher than the training accuracy, while the validation loss is always lower than the training loss. This is common when using Dropout because regularization mechanism such as Dropout is not applied when evaluating the validation set.
 
-![train and validation accuracy plot](accuracy_plot.png)
+![train and validation accuracy plot](/_images/accuracy_plot.png)
 
-![train and validation loss plot](loss_plot.png)
+![train and validation loss plot](/_images/loss_plot.png)
 
 ### Evaluation on Test Set
 
