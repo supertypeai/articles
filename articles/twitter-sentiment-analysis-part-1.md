@@ -16,10 +16,10 @@ I believe that creating a portfolio project is a great way to practice and showc
 
 ### Data Collection
 
-Before collecting the data, we need to define the objective of our project. Our objective is to predict the public's sentiment about a brand (product, service, company or person) based on tweet data. We will use the data collection methodology described in [this paper](https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf) (Twitter Sentiment Classification using Distant Supervision, Go, Bhayani, & Huang, 2009). 
+Before collecting the data, we need to define the objective of our project. Our objective is to predict the public's sentiment about a brand (product, service, company or person) based on tweet data. We will use the data collection methodology described in <u>[this paper](https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf)</u> (Twitter Sentiment Classification using Distant Supervision, Go, Bhayani, & Huang, 2009). 
 
 
-Distant supervision is a method that utilizes a set of rules to automatically label a dataset. Since it does not require human intervention, it can save a lot of time and resources, especially when working with large datasets. In our case, we will use emoticons to label the sentiment of the tweet. Specifically, a tweet with a smiley face emoticon will be labeled as positive, and a tweet with a frowning face emoticon will be labeled negative. We will use a library called `snscrape` to collect the tweets; it does not require using the Twitter API, so we can retrieve a large amount of tweets without worrying about the [rate limit](https://developer.twitter.com/en/docs/twitter-api/rate-limits). In the following section we will walk through the codes and explain the logic behind them.
+Distant supervision is a method that utilizes a set of rules to automatically label a dataset. Since it does not require human intervention, it can save a lot of time and resources, especially when working with large datasets. In our case, we will use emoticons to label the sentiment of the tweet. Specifically, a tweet with a smiley face emoticon will be labeled as positive, and a tweet with a frowning face emoticon will be labeled negative. We will use a library called `snscrape` to collect the tweets; it does not require using the Twitter API, so we can retrieve a large amount of tweets without worrying about the <u>[rate limit](https://developer.twitter.com/en/docs/twitter-api/rate-limits)</u>. In the following section we will walk through the codes and explain the logic behind them.
 
 
 First we will import the necessary libraries, please install them first if you do not already have them.
@@ -163,5 +163,5 @@ df.to_csv("/content/drive/MyDrive/dataset/labeled_tweets.csv", index=False)
 So now we have collected our training data through distant supervision. In the next post, we will walk through the steps of text preprocessing and word embedding, then use it to build a Long Short-Term Memory (LSTM) model. Stay tuned!
 
 ### Relevant Links
-* Project Github: [github.com/tmtsmrsl/TwitterSentimentAnalyzer](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer)  
-* Streamlit App: [twitter-sentiment.streamlit.app/](https://twitter-sentiment.streamlit.app/)
+* Project Github: <u>[github.com/tmtsmrsl/TwitterSentimentAnalyzer](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer)</u>   
+* Streamlit App: <u>[twitter-sentiment.streamlit.app/](https://twitter-sentiment.streamlit.app/)</u>
