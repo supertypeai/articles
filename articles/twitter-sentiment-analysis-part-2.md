@@ -1,6 +1,6 @@
 ---
-title: Twitter Sentiment Analysis - Introduction and Data Collection (Part 1)
-post_excerpt: End-to-end machine learning project on sentiment analysis. In this post, we will walk through the data collection process with distant supervision method.
+title: Twitter Sentiment Analysis - Data Preprocessing and Model Building (Part 2)
+post_excerpt: End-to-end machine learning project on sentiment analysis. In this post, we will walk through the steps of data preprocessing and model building.
 taxonomy:
     category:
         - knowledge
