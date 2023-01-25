@@ -1,3 +1,13 @@
+---
+title: Twitter Sentiment Analysis - Creating Dashboard and Deploying Model with Streamlit (Part 3)
+post_excerpt: End-to-end machine learning project on sentiment analysis. In this post, we will walk through the steps of creating a dashboard and deploying our model as a web app with Streamlit.
+taxonomy:
+    category:
+        - knowledge
+        - notes
+---
+
+
 # End-to-End Machine Learning Project: Twitter Sentiment Analysis - Creating Dashboard and Deploying Model with Streamlit (Part 3)
 
 In the <u>[previous post](https://supertype.ai/notes/twitter-sentiment-analysis-part-2/)</u>, we have build a LSTM model that can predict the sentiment of a tweet. Now we will create a dashboard and deploy our model using Streamlit. Our Streamlit app will automatically scrape the latest tweets based on the entered search term, then perform inference in real-time and visualize the results.
