@@ -14,7 +14,7 @@ In the <u>[previous post](https://supertype.ai/notes/twitter-sentiment-analysis-
 
 ### Reading the Dataset
 
-The original dataset contains the following columns: username, date, tweet, and sentiment. We will only use the tweet and sentiment columns for our purpose.
+The <u>[original dataset](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer/blob/main/dataset/labeled_tweets.csv)</u> contains the following columns: username, date, tweet, and sentiment. We will only use the tweet and sentiment columns for our purpose.
 
 
 ```python
@@ -256,11 +256,10 @@ history = model.fit(
 ```
 
 After 10 epochs, the model stops training because we only set the epochs to 10. The accuracy and loss of the model on the training set and validation set are shown below.  The validation accuracy and loss kind of level off after 7 or 8 epochs.  
+
 Notice that the validation accuracy is always higher than the training accuracy, while the validation loss is always lower than the training loss. This is common when using Dropout because regularization mechanism such as Dropout is not applied when evaluating the validation set.
 
-![train and validation accuracy plot](/_images/tsa_accuracy_plot.png)
-
-![train and validation loss plot](/_images/tsa_loss_plot.png)
+![train and validation evaluation plot](/_images/tsa_eval_plot.png)
 
 ### Evaluation on Test Set
 
