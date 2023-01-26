@@ -12,7 +12,7 @@ taxonomy:
 
 In the <u>[previous post](https://supertype.ai/notes/twitter-sentiment-analysis-part-2/)</u>, we have build a LSTM model that can predict the sentiment of a tweet. Now we will create a dashboard and deploy our model using Streamlit. Our Streamlit app will automatically scrape the latest tweets based on the entered search term, then perform inference in real-time and visualize the results.
 
-### Creating Dashboard with Streamlit
+## Creating Dashboard with Streamlit
 
 First we will make a folder with the following structure:
 ```
@@ -31,7 +31,7 @@ TwitterSentimentAnalyzer
 
 The `app.py` will contain the code for the dashboard design, while the `helper_functions.py` will contain the code for retrieving the tweets, preprocessing the tweets, performing inference and visualizing the results. The `requirements.txt` will contain the list of libraries that we will need to install. The `static` folder contain supporting files, such as the trained model (`lstm_model.h5`), tokenizer (`tokenizer.pickle`), stopwords for sentiment prediction pipeline (`en_stopwords.txt`), stopwords for visualization purpose (`en_stopwords_viz.txt`), twitter image for wordcloud (`twitter_mask.png`) and font type for wordcloud (`quartzo.ttf`). All of the supporting files are available in the <u>[GitHub repository](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer/tree/main/static)</u>.
 
-##### helper_functions.py
+**helper_functions.py**  
 
 We will populate the `helper_functions.py` with the necessary functions. First we will import all necessary libraries.
 
@@ -278,7 +278,7 @@ def plot_n_gram(n_gram_df, title, color="#54A24B"):
     return fig
 ```
 
-##### app.py
+**app.py**  
 
 We will design our dashboard by populating the `app.py` file. First we will import the necessary libraries, which include the `helper_functions` that we have created earlier.
 
@@ -443,7 +443,7 @@ if "df" in st.session_state:
 
 ```
 
-##### requirements.txt
+**requirements.txt**  
 
 We will populate the `requirements.txt` with the libraries required for the Streamlit app. The version of the libraries are included to ensure that the app will run as expected.
 
@@ -460,9 +460,9 @@ wordcloud==1.8.2.2
 snscrape
 ```
 
-### Deploying the Streamlit App
+## Deploying the Streamlit App
 
-##### Testing the App Locally
+### Testing the App Locally
 
 To test our Streamlit app locally, we will change the directory to the folder containing the `app.py` and run the following command in the terminal:
 
@@ -478,7 +478,7 @@ We can test the app by entering a search term and number of tweets to retrieve. 
 
 ![local app 2](/_images/tsa_local_app_2.png)
 
-##### Deploying the App to Streamlit Community Cloud
+### Deploying the App to Streamlit Community Cloud
 
 First we need to upload the project folder to GitHub. Then we will go to the <u>[Streamlit Community Cloud](https://streamlit.io/cloud)</u> and click the 'Get Started' button. After signing in and connecting our GitHhub account, we will click the 'New App' button. We will then enter the repository that we have created earlier, along with the branch and main file path.
 
@@ -488,6 +488,6 @@ After clicking the 'Deploy' button, the app will be deployed to the Streamlit Co
 
 In this post, we have successfully made our Streamlit app and deploy it on Streamlit Community Cloud. If you are following this series from part 1, we have gone through an end-to-end machine learning project, starting from data collection and preprocessing, model building, creating a dashboard, and finally deploying our model and dashboard as an online application. Hopefully you learned something from the series!
 
-### Relevant Links
+## Relevant Links
 * Project Github: <u>[github.com/tmtsmrsl/TwitterSentimentAnalyzer](https://github.com/tmtsmrsl/TwitterSentimentAnalyzer)</u>  
 * Streamlit App: <u>[twitter-sentiment.streamlit.app/](https://twitter-sentiment.streamlit.app/)</u>
