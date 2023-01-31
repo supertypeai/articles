@@ -1,7 +1,7 @@
 ---
 
 title: The power of data storytelling, and how to do it with Tableau
-post_excerpt: Four secrets to start making your first visualization in Tableau
+post_excerpt: Five secrets to start making your first visualization in Tableau
 taxonomy:
     category:
         - knowledge
@@ -14,7 +14,7 @@ taxonomy:
 ![Dashboard UMKM Indonesia](/_images/tableau_1.jpg)
 
 ---
-Carli Fiorina once said, *“The goal is to turn data into information, and information into insight”*. This is true because, no matter how thorough our analysis, it will all be for naught if we are unable to communicate it to others. Visualization is a powerful way to overcome this. People prefer to understand the information presented in the form of images or illustrations more readily than words or statistics since we are visual beings. So here are four recommendations for utilizing Tableau to visualize data.
+Carli Fiorina once said, *“The goal is to turn data into information, and information into insight”*. This is true because, no matter how thorough our analysis, it will all be for naught if we are unable to communicate it to others. Visualization is a powerful way to overcome this. People prefer to understand the information presented in the form of images or illustrations more readily than words or statistics since we are visual beings. So here are five recommendations for utilizing Tableau to visualize data.
 
 ## 1. Discover the **"What"** causing the issue you are facing
 
@@ -46,9 +46,10 @@ Each chart has its function, so make sure you choose the right chart type. Here 
 |Pie Chart|It will split the circle into many sections according to our data. If there are no more than five sections, this chart will be more suitable for usage since if there are more, the pie chart becomes more challenging to read|
 
 ## 4. Create a **design layout**
-This phase is my secret technique for coming up with ideas. However, most people usually choose to design at the moment instead of creating the layout first. For me by creating a layout design early on, the concept we are preparing is well developed, eliminating the need for extensive deliberation throughout the implementation phase. Beginning with the layout in mind is also a crucial stage since we can then search for references to improve our ideas. You may look for references on [Dribble](https://dribbble.com/) and [Pinterest](https://id.pinterest.com/). These 2 apps are where artists' works congregate, therefore you'll get a lot of inspiration there. Moreover, you may go to [Tableau Public](https://public.tableau.com/app/discover/viz-of-the-day) there are many people's portfolios there.
 
 ![Example of Design Layout](/_images/tableau_2.jpg)
+
+This phase is my secret technique for coming up with ideas. However, most people usually choose to design at the moment instead of creating the layout first. For me by creating a layout design early on, the concept we are preparing is well developed, eliminating the need for extensive deliberation throughout the implementation phase. Beginning with the layout in mind is also a crucial stage since we can then search for references to improve our ideas. You may look for references on [Dribble](https://dribbble.com/) and [Pinterest](https://id.pinterest.com/). These 2 apps are where artists' works congregate, therefore you'll get a lot of inspiration there. Moreover, you may go to [Tableau Public](https://public.tableau.com/app/discover/viz-of-the-day) there are many people's portfolios there.
 
 ## 5. Don't let your audiece guess
 
