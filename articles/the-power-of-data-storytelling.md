@@ -1,7 +1,7 @@
 ---
 
 title: The power of data storytelling, and how to do it with Tableau
-post_excerpt: Five secrets to start making your first visualization in Tableau
+post_excerpt: Secrets to start making your first visualization in Tableau
 taxonomy:
     category:
         - knowledge
@@ -84,7 +84,7 @@ The three suggestions above are quite helpful and may act as guidelines for you 
 
 ![Example of Design Layout](/_images/tableau_3.png)
 
-4. Color palette & fonts
+## 4. Color palette & fonts
 
 A visualization is made more beautiful by the use of color. However, picking the incorrect hue can just exacerbate it. Use of dark and contrast hues is the most fundamental color-selection advice. Why? Because the audience can instantly notice it in ancient colors. Use just distinct colors; stay away from pastels. After that, adapt to your audience. There are two methods to choose a color:
 
@@ -103,4 +103,72 @@ Not only color, font also provides an important essence in a visualization. Broa
 ![Example of Typography](/_images/tableau_6.png)
 
 While the second font has a heavier accent and seems stiffer, the first appears extremely clear and is easy to read. A classic typeface with an air of elegance can be seen on the right side, along with the second font from the bottom right that is extremely aesthetically pleasing but a little challenging to read. You may begin selecting fonts after you are aware of the differences between utilizing them [MyFonts](https://www.myfonts.com). This website is really simple to use, and while trying with several fonts, you may get inspiration quickly.
+
+## Creating the Charts
+
+Now that you understand the fundamentals of data visualization, let's get hands on with Tableau. Make sure you have downloaded Tableau Public, and open the application, click "File" in the upper left corner, then click "New" to create a new file 
+
+![chart tutorial 1](/_images/tableau_7.png)
+
+2. When you click "New," a screen similar to this one will appear. Although there are many alternatives available to you, in this lesson we will only cover the fundamental method. To begin, select Data Source next to "Sheet1" in the bottom left corner.
+
+![chart tutorial 2](/_images/tableau_8.png)
+ 
+3. After selecting "Data Source," the screen shown below will appear. Pay close attention to the blue "Connect" tab on the left side of the screen. We can access the data we have from here. Tableau supports processing a variety of file types, including Microsoft Excel, text files, JSON, PDF, and others. We'll utilize an excel-extension file in this lesson. When we pick "Microsoft Excel," a new tab will instantly open, allowing us to choose the appropriate file.
+ 
+![chart tutorial 3](/_images/tableau_9.png)
+
+4. The analysis is the next stage. If you'll note, Tableau sees the "Year" column as an integer even though it should be of the datetime data type. As a result, we must choose the options below to convert the data type from integer to datetime. In addition to datetime, we may also switch to other data types as needed, like strings, Booleans, and geographic roles. 
+
+![chart tutorial 4](/_images/tableau_10.png)
+
+5. When we have finished processing the data, we can start the visualization by clicking the “Sheet1” tab again, and our data is automatically distributed in Tableau and ready to be used
+ 
+![chart tutorial 5](/_images/tableau_11.png)
+
+6. Tableau is incredibly easy to use. At the top of Tableau, there are areas for columns and rows. As the name suggests, we may drag the variables we wish to see in this area. I drag the year variable into the column area and the number variable into the row section because I want to observe the trend in the number of MSMEs
+ 
+![chart tutorial 6](/_images/tableau_12.png)
+
+7. Tableau will suggest a chart that it believes best illustrates our data by default, but we can easily select a different graphic by selecting "Show Me" in the top right corner. We may utilize a variety of visualization techniques there. I decided to try replacing it with a bar chart this time, and this is what happened: 
+
+![chart tutorial 7](/_images/tableau_13.png)
+
+8. How looks it? This is the graph that we used as a comparison in the previous step, and of course it is so bad. You may basically experiment and have fun with the charts that are available, but always utilize the chart in accordance with your aims. To make the line chart more interesting, we need to include certain elements like altering the color. It's quite easy; all you have to do is click on the color area and then make your choice. You may also experiment with opacity and other effects to make your display more attractive.
+
+![chart tutorial 8](/_images/tableau_14.png)
+ 
+9. Last but not least, make sure to add some info related to your visualization. It is very important since additonal info will help your audience to understand the content easily. There are several ways to add info, but you can start with title, caption, legends and tooltip, like this:
+ 
+![chart tutorial 9](/_images/tableau_15.png)
+
+- **Title** to shows the main point in your visualization. On the picture above, we can immediately know that the aim of this visualization is to see the development trend of MSME in Indonesia
+- **Axis Label** to shows what kind of variable that you would to compare or show in the visualization. In this case, we know that x is for “Tahun” and y is for “Jumlah”
+- **Tooltip** to helps your audience to easily see the detail of certain points or thing in your visualization
+- **Legends** to adds detail about the meaning of color we use. By default, a legend will be created whenever your visualization is using color, size, or shape. In Tableau, you can change the color, font, and others by right click at that legend card. There will be some options such as Edit Colors, Format Legends, etc.
+
+Here is the tutorial of adding information in Tableau:
+1. On the worksheet, hover on the title, then click the drop-down arrow on the right-hand side and select Edit Title or Edit Caption from the context menu. By default, you will see "Sheet Name" that means your title will be same as your sheet name. However, you can change it to your own title like this:
+ 
+![chart tutorial 10](/_images/tableau_16.png)
+
+2. You can also change font name, font size, alignment, etc. If you want to see how it fits with your design, you can click “Apply” or just simply click “Ok” to see the changes. After you have finished with your title, let’s move to create a caption (right click, then tick the caption)
+ 
+![chart tutorial 11](/_images/tableau_17.png)
+
+3. Right after you tick “ Caption”, there will be a space in the bottom of your workspace to add your caption. It looks similar with the process of editing title in step 1.
+
+![chart tutorial 12](/_images/tableau_18.png)
+ 
+4. After you give a caption, you can also edit and add axis label, by double click on the axis label, and change it in the upcoming tab like this
+ 
+![chart tutorial 13](/_images/tableau_19.png)
+
+5. Lastly, do not forget to also maximize your visualization through “Marks Box”. You can also add color, size, detail, label and tooltip there. Back to our line chart visualization, we will add some label to it, by dragging selected variable to give it some details. For example, if you want to add label, you can drag your variables in the Tables section ( bottom left of your screen) to the label icon. Then, your design will be shown like this:
+ 
+![chart tutorial 14](/_images/tableau_20.png)
+
+However, for me personally this design does not need a label since there it will ruin the view, then our audience can use tooltip feature to gain the info. Horay, we have done our first task in this tutorial. So easy isn’t it? Next, let’ s make another chart using the same step like what we have done before. Here is the example of other chart that we could make in Tableau.
+
+ 
 
