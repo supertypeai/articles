@@ -11,31 +11,43 @@ taxonomy:
 
 # The power of data storytelling, and how to do it with Tableau
 
-![Dashboard UMKM Indonesia](/_images/tableau_1.jpg)
+How much memory space are you familiar with? Megabytes? Gigabytes? Terrabytes? But do you know what a Zettabyte is? One trillion Gigabytes is equal to one Zettabyte of memory. In reality, you won't have to wait long to get quite familiar with the Zettabyte unit since, according to International Data Corp's (IDC) research, 163 zetabytes of data will be generated in 2025, a huge increase in volume. Because of this extremely quick development, the phrase "Data is the new oil" has become so prevalent. But underlying all of that, there is one critical step that data professionals sometimes overlook or ignore, namely Data Visualization.
 
----
-Carli Fiorina once said, *“The goal is to turn data into information, and information into insight”*. This is true because, no matter how thorough our analysis, it will all be for naught if we are unable to communicate it to others. Visualization is a powerful way to overcome this. People prefer to understand the information presented in the form of images or illustrations more readily than words or statistics since we are visual beings. So here are five recommendations for utilizing Tableau to visualize data.
+![Difference between Visualization & Data Table](/_images/tableau_1.png)
 
-## 1. Discover the **"What"** causing the issue you are facing
+How much time did it take you to comprehend the significance of the information in the table on the left? 10 minutes probably won't be enough, especially with that complexity.  However, as soon as you contrast it with the data visualization to the right, it becomes clear that this data pertains to the growth of MSMEs in Indonesia. You will receive information on which MSME items are selling the best on the market, etc., in just a few minutes. That is how people gather information. People are able to concentrate on a certain area since they are helped to comprehend the essential details necessary for their line of work by the visualization. Data visualization not only simplifies difficult-to-understand data tables but also enables thorough data analysis and the making of prudent decisions.
 
-Visualization is more than just a picture, it's also information. As a result, we must fully comprehend the issue that has to be resolved. The 5W + 1H question format is the simplest to use. In my case, I made a list of the following questions since I want to solve the Micro, Small and Medium Enterprises(MSME) or well known as Usaha Mikro Kecil dan Menengah (UMKM) problem in Indonesia, such as:
+“All roads to the Rome”. There are several approaches to accomplish our objectives, and there are numerous tools available for data visualization that we may utilize to create visually appealing representations, including Tableau, Power BI, and Google Data Studio. Although each tool has its benefits, Tableau is the finest ones. This is clear from the fact that the Gartner Magic Quadrant has awarded the category of Analytics and Business Intelligence Platform apps with the title of best application for 8 years running. Data blending, real-time analysis, and data collaboration are some outstanding features that are exclusive to Tableau. These are, generally speaking, the three benefits of Tableau that I have experienced:
+- Interactive visualization: There are several visualization choices available, and Tableau can also automatically suggest any visualization that corresponds to the data we have. Tableau also provides a wide variety of moving/non-static visualization choices.
 
--	What is the development trend of MSMEs in Indonesia?
--	What kind of support is provided by the Indonesian government for the growth of MSMEs there?
--	How much does Indonesia's GDP contribute from MSMEs?
--	What are the factors that have the most influence on the progress of MSMEs?
+- Handling several sources and data types: Data can occasionally originate from sources other than a single spreadsheet file. Even more complicated, you may now utilize file extensions other than just xlsx, such as csv, json, etc. You can handle data in Tableau extremely easily because of the data blending capability.
+
+- Mobile-friendly dashboard: Tableau offers the Tableau Desktop application (use on a PC/Laptop) as well as Tableau Mobile, which you can use on an iPhone, iPad, Android tablet, or mobile browser for free. In addition to making it simple for you to create visualizations, Tableau also makes it easy for your audience to view them.
+Is Tableau free given all these benefits? Yes! You may start learning using Tableau Public for nothing at all to hone your Tableau operational abilities.
+
+In conclusion, data visualization is an essential component that must be included in any data processing process. However, thanks to Tableau, we no longer have to worry about developing a visualization dashboard from the ground up. After this, I'll show you how to create a visualization dashboard, which is shown in the first paragraph from scratch. Though it appears complicated, it's actually pretty simple to comprehend. Let's work on this together!
+
+## 1. Discover the "What" and “Who”
+
+Who is the target audience and what are you trying to convey? Make sure that the criteria have been established from the beginning since visualization is more than simply an aesthetic art; it is also a source of information. You need to be able to decide at this point what information you want to provide, why it is significant, and how you will persuade your audience. I find that using the 5W + 1H question formula is the simplest method. You could start from the dataset. Focus on every row and column, then begin formulating a single question that captures the urgency of the facts. In my situation, I immediately wondered, "How are MSMEs developing and contributing in Indonesia?" If you have never understood a complicated dataset, you will probably be perplexed since you must comprehend the significance of each column, search for links between variables, and carry out other essential analyses that, of course, take a lot of time. It's very natural, and there's no need to worry since I have a lot easier solution. Close all the dataset files you had open previously, sit down, and try to come up with one major subject, specifically "Indonesian MSMEs." Using the same 5W + 1H formula, my natural curiosity led me to consider the following issues in less than 5 minutes,:
+- How is the development of MSMEs in Indonesia?
+- What is the contribution of MSMEs in Indonesia?
+- What are Indonesian MSME products?
+- How is the digital economy ecosystem in Indonesia?
+
+How about you? Are you thinking the same thing? We were able to create concise goals from these four first queries. These inquiries, however, are insufficient, so we must work to assemble as much data as we can. Imagine that you are the audience as a business owner and that one of your employees is presenting a line chart with the simple statement, "Our sales have increased for a year." Does that suffice? No, you will undoubtedly answer with a variety of questions, such as what percentage the growth is, why there may be an increase, when sales started to show a good trend, what is our future plan, and how it relates to the state of the world economy. The same goes for creating visualizations; make sure your work is as thorough as you can. Here is an example of how to formulate the four questions mentioned above:
+
+-	What is the development trend of MSMEs in Indonesia? What are the factors that have the most influence on the progress of MSMEs? 
+-	How much does MSMEs contribute to Indonesia in Gross Domestic Product, export, and employment?
 -	What is the largest MSME sector in Indonesia?
--	How many MSMEs in Indonesia have adopted e-commerce?
+-	How many MSMEs in Indonesia have adopted e-commerce? Is there any support provided by the Indonesian government for the growth of MSMEs there?
 
-It is preferable to have more questions since it shows that you have a thorough understanding of your issue. Ask others for their perspectives, especially those who are knowledgeable about the subject at hand. Don't overlook this step since locating the roots of the problem is crucial to a visualization's effectiveness.
+We will use these 4 questions as a guide while creating visualizations. It's crucial to keep in mind that visualizations are not intended for you. As a result, you must adapt to what your intended audience wants to know. It is also desirable to additionally solicit the opinions of others, particularly those who are knowledgeable about the issue at hand. Speaking in more depth about the target audience, this is truly crucial for identifying the problem's core and affects the visualization we plan to design. The design outcomes of our visualization for the same issue will undoubtedly change based on the audience. As simple as, use sophisticated charts, such as waterfall charts, with strong and readable fonts to express your ideas clearly when creating visualizations for coworkers, colleagues, and other data scientists. However, when creating visualizations for children, it is preferable to use simple visualizations like bar charts, with appealing font styles and vibrant colors. In my case, I chose to utilize a brown color tone because the people who will be viewing my visualization are West Java government officials, academics, and MSME players. In addition to being neutral, brown is a sophisticated color to use in visualization. I write in the classic font, which is often used in writing for publications, posters, etc. Because there will be MSME players in the future who don't really understand statistics, I also employ some straightforward visuals like line charts and bar charts. Make sure you also do the same thing, because the audience is everything. No matter how valuable the information is, it won't reach them if we can't get their attention. Don't overlook this step since locating the roots of the problem is crucial to a visualization's effectiveness.
 
-## 2. Be aware of your visualization's **target audience**
 
-The audience is everything. No matter how valuable the information is, it won't reach them if we can't get their attention. Use appealing fonts and colors, and simple visualization (like bar charts) when creating visualizations for kids. However, when making visuals for business presentations, utilize classy colors, readable fonts, and advanced visualization ( like waterfall charts). In my example, I choose to utilize a brown color tone because the people who will be viewing my visualization are West Java government officials, academics, and MSME players. Brown not only appears neutral but is also elegant to employ in visualization. I use the Poppins font, a classic font that is frequently used in writing for publications, posters, etc. To facilitate the audience's understanding of the information from my visualizations, I also included several picture components. Consider themes, colors, fonts, and pictures after you've identified your target market. You may utilize the assistance of some of these websites to make things simpler, [My Fonts](https://www.myfonts.com/pages/whatthefont ) and [Color Pallete](https://colorpalettes.net/)
+## 2. Understand each **graph's function**
 
-## 3. Understand each **graph's function**
-
-Each chart has its function, so make sure you choose the right chart type. Here are the 5 most popular types of visualizations that are frequently used in Tableau
+Charts are inseparable when we talk about visualization, and each chart has its function, so make sure you choose the right chart type. Here are the 5 most popular types of visualizations that are frequently used in Tableau
 
 | Graph | Function |
 |-------|----------|
@@ -45,58 +57,51 @@ Each chart has its function, so make sure you choose the right chart type. Here 
 |Scatter Plot| a statistical tool for analyzing the correlation between two numerical variables|
 |Pie Chart|It will split the circle into many sections according to our data. If there are no more than five sections, this chart will be more suitable for usage since if there are more, the pie chart becomes more challenging to read|
 
-## 4. Create a **design layout**
+Have you ever imagined what happens when we use a chart that is not in accordance with its function? Let's look at the comparison below:
 
-![Example of Design Layout](/_images/tableau_2.jpg)
+![Difference between Line Chart & Bar Chart](/_images/tableau_2.png)
 
-This phase is my secret technique for coming up with ideas. However, most people usually choose to design at the moment instead of creating the layout first. For me by creating a layout design early on, the concept we are preparing is well developed, eliminating the need for extensive deliberation throughout the implementation phase. Beginning with the layout in mind is also a crucial stage since we can then search for references to improve our ideas. You may look for references on [Dribble](https://dribbble.com/) and [Pinterest](https://id.pinterest.com/). These 2 apps are where artists' works congregate, therefore you'll get a lot of inspiration there. Moreover, you may go to [Tableau Public](https://public.tableau.com/app/discover/viz-of-the-day) there are many people's portfolios there.
+We occasionally wish to see trends or patterns based on the statistics on the growth of MSMEs in Indonesia that was mentioned before. I created a bar chart on the left side and a line chart on the right side to represent the data. Isn't the trend more obvious in the second visualization? It is crucial that we utilize the correct chart since the incorrect chart increases the likelihood that the audience will not understand the information you are trying to express.
 
-## 5. Don't let your audiece guess
+## 3. Create a **design layout**
 
-Last but not least, make sure to add some info related to your visualization. It is very important since additional info will help your audience to understand the content easily. There are several ways to add info, but you can start with a title, caption, legends, and tooltip, like this:
+Have you ever considered how a newspaper is written? Instead of being printed horizontally to complete a newspaper sheet, writing is split by column. The image in the headline news is often almost a third of a page in size, and it is followed by a title in a bold, huge font. At the top of the page are some advertisements. Why should that be the case is the question. Why not have advertisements on the bottom? Why not make the picture smaller?
+Layout design is the answer to each of these issues. Because most people read from top to bottom, advertisements are always at the top of the page where they will be immediately visible to readers. Because most readers require a hook to pique their interest, the picture virtually fills a third of the page. Writing is divided into columns because most readers are better able to concentrate while reading a tiny portion as opposed to something that appears large and complicated. Writing is also from left to right since that is how people read. That is a straightforward instance of using layout design.
 
-![Contoh Visualisasi dengan Informasi Lengkap](/_images/tableau_3.jpg)
+The creation of a layout design will increase the effectiveness of your work in addition to making it simpler for the audience to grasp the flow of your design. Maybe you're wondering what the term "effective" actually means. While designing something, h ave you ever repeatedly searched Google for ideas? Have you ever continually changed images because you couldn't decide which one to use? Have you ever spent a lot of time deciding on the perfect color for your design? Or have you ever been unsure of the best font to use? Everything transpired as a result of your lack of an initial clear strategy. It's challenging to think and design at the same time, I assure you.  So, here are some things that I usually apply in making layout designs:
+
+-	Research: Always do as much research as you can before creating a design. Find out how other designer / illustrator present information in an appealing and artistic manner. You may look for references on Dribble and Pinterest. These 2 apps are where artists' works congregate, therefore you'll get a lot of inspiration there. Moreover, you may go to tableau public there are many people's portfolios there.
+
+-	Know the Hierarchy: Similar to what you have seen in the hierarchy of newspaper writing as an example. Make sure the most crucial information is conveyed first in your design. When using visualization, you may begin with the title or even the main visualization, which serves as the fundamental building block of the message you want to communicate. Second, check the composition of the text, graphics, and visualizations you employ. You can grasp the hierarchical design using a number of characteristics, including grid, alignment, color, and font. You may place your pieces using a grid to keep the columns and rows in the right order. Alignment, meanwhile, will make your design seem tidy and appealing. In the next phase, we'll become more specific regarding colors and typography.
+
+-	Review, ask for feedback and improve: We occasionally manage to obtain one layout that is both excellent and attractive. As a result, after successfully creating your layout design draft , you may ask some of the questions below as an evaluation.
+-	
+-	1. Have I already informed you of what I was about to do in step 1?
+-	2. Have you used attributes like font and color consistently in your work?
+-	3. Is there information that is unnecessary and may be removed to make the design more straightforward and appealing?
+-	
+The three suggestions above are quite helpful and may act as guidelines for you as you continue to create layout designs. As of right now, I have the following design layout:
+
+
+![Example of Design Layout](/_images/tableau_3.png)
+
+4. Color palette & fonts
+
+A visualization is made more beautiful by the use of color. However, picking the incorrect hue can just exacerbate it. Use of dark and contrast hues is the most fundamental color-selection advice. Why? Because the audience can instantly notice it in ancient colors. Use just distinct colors; stay away from pastels. After that, adapt to your audience. There are two methods to choose a color:
+
+1. Utilize the company's or target's logo color as inspiration: For example, if you're creating a visualization for Garuda Indonesia, you may use the fundamental color palette of white, tosca, and blue. You can utilize the foundation colors of purple and blue when producing visualizations for Baskin Robbins, or red and yellow when creating visualizations for Lego.
  
-- **Title** shows the main point in your visualization. From the picture above, we can immediately know that this visualization aims to compare and find the correlation between product description, sold products, and product price
-- **Legends** add detail about the meaning of the color we use. In this example, we know that the light brown color indicates 0 or a bad product description, and dark brown indicates 1 or a good product description
-- **Axis Label** shows what kind of variable you would to compare or show in the visualization. In this case, we know that x is for “Sold” and y is for “Price”
-- **Tooltip** helps your audience to easily see the detail of certain points or things in your visualization
+![Example of Company Logo Color](/_images/tableau_4.png)
 
-Here is the tutorial for adding information in Tableau:
-1. On the worksheet, hover on the title, then click the drop-down arrow on the right-hand side and select Edit Title or Edit Caption from the context menu. By default, you will see "Sheet Name" which means your title will be the same as your sheet name. However, you can change it to your title like this:
+2. Learn the significance of each color: The second option is to employ colors in accordance with the feelings and objectives you wish to portray. For those of us who aren't familiar with design, tip number two could be pretty challenging. But don't worry; I always have a simpler answer, which is to use [ColorPalettes](https://colorpalettes.net). We can quickly look for color combinations on this website, copy the color code, and utilize it in our Tableau application.
 
-![Tampilan Edit Title](/_images/tableau_4.jpg)
- 
-2. You can also change the font name, font size, alignment, etc. If you want to see how it fits with your design, you can click “Apply” or just simply click “Ok” to see the changes. After you have finished with your title, let’s move to create a caption (right-click à tick the caption)
- 
- ![Tampilan Setelah Edit Title](/_images/tableau_5.png)
+![Example of Color Pallete website](/_images/tableau_5.png)
 
-3. Right after you tick “ Caption”, there will be a space at the bottom of your workspace to add your caption. It looks similar to the process of editing the title in step 1.
- 
- ![Tampilan Edit Caption](/_images/tableau_6.png)
+An illustration of a website presentation using color palettes is shown above. I want to utilize green in this case, but I'm not sure what colors will look well with it. Therefore, there are 5 possible color combinations when using this colour palette. If you look closely, each color has a special code at the bottom, such as #1A2902. You may copy or write this hex color into the Tableau app's color selection.
 
-4. Next, if you are focusing on a small info box beside the visualization, you will realize that this is a **legend**. By default, a legend will be created whenever your visualization is using color, size, or shape. You can change the color, font, and others by right click on that legend card. There will be some options such as Edit Colors, Format Legends, etc
- 
- ![Tampilan Edit Legend](/_images/tableau_7.png)
+Not only color, font also provides an important essence in a visualization. Broadly speaking, there are 4 font families namely Sans Serif, Serif, Decorative, and Script. What is the difference? Let's see in detail through the example below: 
 
-5. For example, if you click the “Edit Colors” option from the dropdown menu, you will be able to edit the color from a menu like this:
+![Example of Typography](/_images/tableau_6.png)
 
-![Tampilan Edit Color Legend](/_images/tableau_8.png)
- 
-6. Lastly, do not forget to also maximize your visualization through “Marks Box”. You can also add color, size, detail, label, and tooltip there. 
-
-![Tampilan Marks Box](/_images/tableau_9.png)
- 
-7. For example, if you want to add a label, you can drag your variables in the Tables section ( bottom left of your screen) to the label icon. Then, your design will be shown like this:
-
-![Tampilan Add Label](/_images/tableau_10.png)
-
-8. However, for me this design does not need a label since there is clear information from the legend. So, here is my final design using a scatter plot to visualize the correlation between several variables
-
-![Tampilan Final Design](/_images/tableau_11.png)
-
----
-
-To sum up, The audience and the problem's core are the visualization's two most important success factors. Make sure your design is in line with the goal you have in mind, and be very clear about the issue you want to raise. Don't forget to familiarize yourself with how each style of visualization works, too. Create a layout design, gather as much inspiration as you can, and don't forget to include as much information in your visualization as you can.
-
+While the second font has a heavier accent and seems stiffer, the first appears extremely clear and is easy to read. A classic typeface with an air of elegance can be seen on the right side, along with the second font from the bottom right that is extremely aesthetically pleasing but a little challenging to read. You may begin selecting fonts after you are aware of the differences between utilizing them [MyFonts](https://www.myfonts.com). This website is really simple to use, and while trying with several fonts, you may get inspiration quickly.
 
