@@ -75,11 +75,10 @@ The creation of a layout design will increase the effectiveness of your work in 
 -	Know the Hierarchy: Similar to what you have seen in the hierarchy of newspaper writing as an example. Make sure the most crucial information is conveyed first in your design. When using visualization, you may begin with the title or even the main visualization, which serves as the fundamental building block of the message you want to communicate. Second, check the composition of the text, graphics, and visualizations you employ. You can grasp the hierarchical design using a number of characteristics, including grid, alignment, color, and font. You may place your pieces using a grid to keep the columns and rows in the right order. Alignment, meanwhile, will make your design seem tidy and appealing. In the next phase, we'll become more specific regarding colors and typography.
 
 -	Review, ask for feedback and improve: We occasionally manage to obtain one layout that is both excellent and attractive. As a result, after successfully creating your layout design draft , you may ask some of the questions below as an evaluation.
--	
--	1. Have I already informed you of what I was about to do in step 1?
--	2. Have you used attributes like font and color consistently in your work?
--	3. Is there information that is unnecessary and may be removed to make the design more straightforward and appealing?
--	
+    1. Have I already informed you of what I was about to do in step 1?
+    2. Have you used attributes like font and color consistently in your work?
+    3. Is there information that is unnecessary and may be removed to make the design more straightforward and appealing?
+
 The three suggestions above are quite helpful and may act as guidelines for you as you continue to create layout designs. As of right now, I have the following design layout:
 
 
