@@ -170,5 +170,5 @@ Here is the tutorial of adding information in Tableau:
 
 However, for me personally this design does not need a label since there it will ruin the view, then our audience can use tooltip feature to gain the info. Horay, we have done our first task in this tutorial. So easy isn’t it? Next, let’ s make another chart using the same step like what we have done before. Here is the example of other chart that we could make in Tableau.
 
- 
+![chart tutorial 15](/_images/tableau_21.png)
 
