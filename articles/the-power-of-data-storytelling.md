@@ -104,7 +104,7 @@ Not only color, font also provides an important essence in a visualization. Broa
 
 While the second font has a heavier accent and seems stiffer, the first appears extremely clear and is easy to read. A classic typeface with an air of elegance can be seen on the right side, along with the second font from the bottom right that is extremely aesthetically pleasing but a little challenging to read. You may begin selecting fonts after you are aware of the differences between utilizing them [MyFonts](https://www.myfonts.com). This website is really simple to use, and while trying with several fonts, you may get inspiration quickly.
 
-## Creating the Charts
+# Creating the Charts
 
 Now that you understand the fundamentals of data visualization, let's get hands on with Tableau. Make sure you have downloaded Tableau Public, and open the application, click "File" in the upper left corner, then click "New" to create a new file 
 
@@ -171,4 +171,79 @@ Here is the tutorial of adding information in Tableau:
 However, for me personally this design does not need a label since there it will ruin the view, then our audience can use tooltip feature to gain the info. Horay, we have done our first task in this tutorial. So easy isn’t it? Next, let’ s make another chart using the same step like what we have done before. Here is the example of other chart that we could make in Tableau.
 
 ![chart tutorial 15](/_images/tableau_21.png)
+
+
+# Combining the Charts into Dashboard
+
+There isn't much left for us to do to reach our goal. Let's create a dashboard by combining the four charts into one. Your screen will now display once you click "New Dashboard" in the lower left corner of the page. 
+
+![dashboard in tableau](/_images/tableau_22.png)
+
+Making dashboards requires you to be know this 2 key areas, including the following:
+
+1. Size: You may select the size of your visualization in this area. You may select between a fixed size, an automated size that adapts to your screen's width and height, and a variety of sizes (you can automatically set the width and height of your visualization within a certain range)
+ 
+![dashboard size](/_images/tableau_23.png)
+
+2. Objects: In a direct way, the attribute you will use while creating a dashboard is called an object. The type of object used might vary depending on the need; below is an example of it
+
+
+![dashboard objects](/_images/tableau_24.png)
+
+- Horizontal: Leave room horizontally on your dashboard. You may subsequently fill this area with text, graphics, or charts you've created.
+- Vertical: identical to horizontal but designed to provide vertical space to the dashboard
+- Text: add the dashboard's text.
+- Image: decorate the dashboard with a picture
+- Blank: The only difference between a blank and a horizontal or vertical line is that a blank can only be used to create an empty area without being able to fill it with a chart. -
+- Web page: Include a website link that can be accessed in real time.
+- Navigation: This item is particularly helpful if you have more than two dashboards or sheets since you may connect to them immediately by clicking the navigation button.
+
+Okay, let's start building a real dashboard now!
+
+
+Let's start by using the layout design as a guide. We must employ vertical and horizontal items to separate the dashboard into multiple sections because the left side needs some spaces for titles, image, and some text content. After dividing the dashboard into 2 parts, vertical, we continue by making horizontal space on the right side
+ 
+
+![dashboard tutorial 1](/_images/tableau_25.png)
+
+Second, drag the sheet options on the left side of the screen to where you want them to be in order to incorporate all the visualizations you've generated in your design layout. 
+
+
+![dashboard tutorial 2](/_images/tableau_26.png)
+
+Third, we must add a text object above the line chart and bar chart visualization, as well as above the pie chart and tree maps, in order to clarify the flow of the visualization above, in accordance with the plan in the layout design. 
+Fifth, we will add a blank object above the tree map visualization, this aims to add empty space to include supporting photos, as well as information in the form of text as follows 
+
+
+![dashboard tutorial 3](/_images/tableau_27.png)
+
+The fourth step is to input pictures using object images and text using object text after successfully establishing an empty space above the tree maps representation. Maybe you're curious as to why I'm talking more in-depth about text and image data. First, the image shows Mr. Teten Masduki, Indonesia's Minister of Cooperatives and Small and Medium-Sized Enterprises. Because I want to convey information about the government's actions in this visualization, Mr. Masduki's image is a good choice. 
+
+![dashboard tutorial 4](/_images/tableau_28.png)
+
+75% of our dashboard is ready. Now, let's focus on completing the left side of this dashboard. In the upper left corner of the initial layout design, there is a title. Let's use the text object to provide a title. I choose a big, bold font for the title, which says UMKM Indonesia. I purposefully gave it a size that would draw the audience's attention to that portion. When someone views this visualization, I want them to comprehend its fundamental idea right away. I wrote the subheading "Bangkit Bersama, Ekonomi Maju" just beneath the header. These phrases may seem fairly straightforward, but since the government, academics, and MSME players make up my target audience, this slogan inadvertently instills new energy in us following the Covid-19 pandemic.
+ 
+![dashboard tutorial 5](/_images/tableau_29.png)
+
+Additionally, there is a picture and commentary about MSMEs in Indonesia from Indonesian President Joko Widodo. Given how big of an impact the president has on the growth of MSMEs in Indonesia, it is crucial to include this. It gives this image some credence by include his quote. Let's combine the two complementing bits of data using a text object and an image object. 
+ 
+ ![dashboard tutorial 6](/_images/tableau_30.png)
+
+No less significant than the data illustrated by charts. We would like to give a quick overview of the role played by MSMEs in Indonesia in accordance with the layout design we created. Why is it not presented as a chart or table, is the question. Personally, I believe that there are too many charts presented on one dashboard; if you force yourself to use tables, this dashboard would feel really crowded and uninteresting. On the other hand, I want the audience to learn intriguing information about Indonesian MSMEs right away. By using large, bold statistics, I'm confident that this will capture their attention and lead to further investigation of the data through visualization. A text object can be used to provide additional information. 
+
+![dashboard tutorial 7](/_images/tableau_31.png)
+
+Finally, let's conclude this visualization with an image showing Indonesian MSMEs. Humans are visual beings, as I mentioned at the introduction. It is simpler for us to obtain a general understanding of this representation if there is an image. 
+
+![dashboard tutorial 8](/_images/tableau_32.png)
+
+Wait a minute, don’t you think there are too much text on this dashboard? Yes, I feel the same, so that I decide to drop the caption for line chart and bar chart. Not only to make it simple, but I think its title has already stated the purpose clearly without any caption needed
+ 
+![dashboard tutorial 9](/_images/tableau_33.png)
+
+Wow, what a journey, my buddy. You are learning quickly. Congratulations. Oh, and before I wrap up this article, let's have a look at the following differences between a dashboard with and without detailing: 
+
+![dashboard final](/_images/tableau_34.png)
+
+Detailing enhances both the aesthetics and our ability to grasp the information. At last, visualization and design are not absolutes, you need to practice a lot to develop your own style. Remember to always learn and improve your design. Cheers!
 
