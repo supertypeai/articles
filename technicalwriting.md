@@ -22,21 +22,21 @@ This is an instructional guide for anyone relatively new to technical writing. I
     - A more formal tone doesn't try to engage the reader, it just presents the information. It doesn't ask questions, it just states facts. It also doesn't ask the reader to do anything, such as "ask yourself", or "let's take a look", or "by looking at the code snippet above, you will find that ...". It states facts, such as "the code snippet above shows that our refactored code is 2x shorter."
         - There are no hard rules. **Pick a consistent tone and stick to it. One might choose to be casual, conversational, formal, or even academic. Just be consistent.**
         - I could have written the preceding sentence in a different tone.If I were going for a more conversational tone, this is how I would have written the line above.
-        -_Since there are no hard rules, you can pick any tone you like. You may choose a casual, conversational, formal or even academic style, but you want to stay consistent._
+            - _Since there are no hard rules, you can pick any tone you like. You may choose a casual, conversational, formal or even academic style, but you want to stay consistent._
         - Both convey the same message. The first one is more formal; the second one is more conversational.
 
 
 - Use bullet points to present lists and sequences.
     - "After you have installed the package, you also want to make sure it has been added to the dependencies of your project, which could mean verifying it in package.json for a JS project, or requirements.txt for a python project, but make sure there is a separation between development and production dependencies." can be refactored into bullet points:
         - Install the package, and add it to the dependencies of your project.
-            -`.js`: verify it in package.json
-            -`.py`: verify it in requirements.txt
+            - `.js`: verify it in package.json
+            - `.py`: verify it in requirements.txt
             - Note: Ensure a separation between development and production dependencies.
         - It could also be written as a sequence:
             1. Install the package
             2. Add it to the dependencies of your project.
-                -`.js`: verify it in package.json
-                -`.py`: verify it in requirements.txt
+                - `.js`: verify it in package.json
+                - `.py`: verify it in requirements.txt
             3. Separate your development and production dependencies.
 
 
@@ -61,3 +61,12 @@ This is an instructional guide for anyone relatively new to technical writing. I
     - You have unique experiences, whether by working on a project individually or as a team, that you can bring into the article. This is a great way to offer a unique perspective. "Solving the unpredictable nature of water level on the Barito river in Kalimantan: Perspectives and Lessons" is highly unique, and if you worked on that project, you're more uniquely qualified than a MIT graduate or Harvard professor to write about it.
     If you struggle to provide unique perspectives, do fewer projects and spend more time immersing yourself in one or two domains. If you're haphazardly working on 10 projects (or learning 5 different technologies) in 2 weeks, you're not going to be well versed enough in any one specific domain to offer a unique contribution.
     - When bringing your content into the world, start by asking yourself, "What is an article on which I'm in the top 1% of people uniquely qualified to offer my perspective?" Solve an unmet need.
+
+--- 
+
+### Contributions from Supertype's writers
+
+#### Stane Aurellius
+- Engage by antcipation: Engage the reader by anticipating their objections and questions; look to address these source of frustrations pre-emptively as you move through the article. In addition to showing your proficiency in the topic, this brings empathy to your writing and makes it more relatable.
+
+- Add variety in your writing: Use a variety of sentence structures; experiment with using humor and anecdotes (sparringly, and only when appropriate) if you adopt a more conversational style of writing. This avoid your writing from becoming monotonous or repetitive.
