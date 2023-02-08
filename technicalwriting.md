@@ -14,9 +14,9 @@ This is an instructional guide for anyone relatively new to technical writing. I
 
 - Refactor long sentences
     - "After you have installed the package, you want to also make sure it has been added to the dependencies of your project, which could mean verifying it in package.json for a JS project, or requirements.txt for a python project, but make sure there is a separation between development and production dependencies." is an awfully long sentence, and hard to follow. Refactor it into shorter sentences.
-    - """Install the package, then add it to the dependencies of your project. \n
-    For a JS project, verify it in package.json. For a python project, verify it in requirements.txt. \n
-    Ensure a separation between development and production dependencies."""
+    - Install the package, then add it to the dependencies of your project. 
+    For a JS project, verify it in package.json. For a python project, verify it in requirements.txt.
+    Ensure a separation between development and production dependencies.
 
 - Pick a consistent tone
     - "Now, this dashboard looks a lot prettier, right?" is very casual and informal. "This dashboard looks a lot prettier now, doesn't it?" is less casual but arguably still informal. Both of these senteces are conversational. They mirrors how you speak, and it ends with asking a question. You wouldn't write that if you were writing a technical document, or a paper, or a coursebook meant for students. If you would like a more formal tone, aim to end the statement with a period. "You may find that this dashboard looks prettier than the earlier version". 
