@@ -1,6 +1,23 @@
 ## Technical Writing
 This is an instructional guide for anyone relatively new to technical writing. It is not a comprehensive guide, but it encapsulates the more important aspects of writing and offer some practical tips you can immediately incorporate into your writing.
 
+
+### The Case for Writing Well
+> 'Notes aren't a record of my thinking process. They are my thinking process.'
+>  – Richard Feynman.
+
+- Writing is _the product_. As software engineers and data scientists, we are often tasked with writing code, and we spend an enormous amount of our life improving this skill. However, any software developers will tell you that writing code is only a small part of the job. In the industry, the **quality of your communication** is just as important as the quality of your code. Treating your writing as a product and putting it on equal footing with your code means you should strive to improve your writing (and overall communication) skills as much as you improve your coding skills.
+
+- Your ideas deserved to be judged on their merit. If you cannot write well, you are doing your ideas a disservice. You are not giving them the best chance to be understood and appreciated.
+
+- It's often the _only_ evidence of your expertise. Up to 90% of your readers will never have the opportunity to meet you in person, or code with you, or watch you deliver a live demo. This is a pretty sobering realization, because it means to the vast majority of people, that piece of writing is the key evidence of your competencies, your level of training, and your intellectual faculties. This is deeply fair, but it is best you are aware of it and work on your written communication skills as if your career depended on it. Because, sometimes, it does.
+
+- Writing is a device for thinking. It is how you formulate ideas, before organizing them into a coherent narrative. As you edit and revise, you are forced to think about your ideas from different vantage points. It is how you form internal connections between ideas, and posits new arguments and counterarguments. A good writer foster a habit of good thinking, and a sloppy writer is often an indication of disjointed thinking.
+
+The following guide is my attempt to crystallize the practices I have followed in my own writing, and I hope it will be useful to you as well.
+
+## Pedagogical Strategies
+
 ### Techniques of Technical Writing
 - Use the active voice.
     - "RStudio will display a message" rather than "A message will be displayed by RStudio."
@@ -40,13 +57,13 @@ This is an instructional guide for anyone relatively new to technical writing. I
             3. Separate your development and production dependencies.
 
 
-### Pedagogical Strategies
+### Rule of thumb
 > 'I apologize for such a long letter - I didn't have time to write a short one.'
-> -- Mark Twain
+> – Mark Twain
 
-1. Almost always rewrite your introduction after you've completed the rest of the article. It's easier to write an introduction after you've written the rest of the article. You have opportunities to assert your key points, and use the introduction to summarize your arguments and conclusions _because_ you have completed the article.
+1. Introduction comes last: Almost always rewrite your introduction after you've completed the rest of the article. It's easier to write an introduction after you've written the rest of the article. You have opportunities to assert your key points, and use the introduction to summarize your arguments and conclusions _because_ you have completed the article.
 
-2. The 25% rule: In most articles, you could remove the first 25% of the article and it would still have 100% information retention. The first 25% of most articles is padded with generic opening remarks. In the data science industry, the first 25% of most articles is usually about how we're all living in an era of big data with an ever-increasing rate of new tools, innovations, yada yada. It's a generic opening remark that isn't necessary.
+2. The 25% rule: In most articles, you could remove the first 25% of the article and it would still have 100% information retention. The first 25% of most articles is padded with generic opening remarks. In the data science industry, the first 25% of most articles is usually about how we're all living in an era of big data with an ever-increasing rate of new tools, innovations, yada yada. It's a generic opening remark that isn't necessary. Whatever your first thought is, there almost certainly is a better way of formulating it using a more concise approach. Everytime you write your first draft of an article, ask yourself if you could have removed the first 25% of the article, or made it 25% shorter, with perfect information retention. If you can, you should.
 
 3. Staying on-topic: It's easy to write a highly elaborate article, with lots of citations and references, and plenty of examples without actually answering the question. It's easy to write an article that is 100% on-topic, but 0% useful. It's also easy to write an article that is 100% useful, but 0% on-topic. You may want to solicit feedback early on in the writing process to ensure you're staying on-topic. You want to produce an outline for your article or content to solicit feedback from your editor before writing the article.
 
@@ -67,6 +84,6 @@ This is an instructional guide for anyone relatively new to technical writing. I
 ### Contributions from Supertype's writers
 
 #### Stane Aurellius
-- Engage by antcipation: Engage the reader by anticipating their objections and questions; look to address these source of frustrations pre-emptively as you move through the article. In addition to showing your proficiency in the topic, this brings empathy to your writing and makes it more relatable.
+- Engage by anticipation: Engage the reader by anticipating their objections and questions; look to address these source of frustrations pre-emptively as you move through the article. In addition to showing your proficiency in the topic, this brings empathy to your writing and makes it more relatable.
 
 - Add variety in your writing: Use a variety of sentence structures; experiment with using humor and anecdotes (sparringly, and only when appropriate) if you adopt a more conversational style of writing. This avoid your writing from becoming monotonous or repetitive.
