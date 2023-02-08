@@ -1,16 +1,25 @@
-## Technical Writing
-This is an instructional guide for anyone relatively new to technical writing. It is not a comprehensive guide, but it encapsulates the more important aspects of writing and offer some practical tips you can immediately incorporate into your writing.
+---
+title: Technical Writing (Why & How to Write Well) for Analytics Professionals
+post_excerpt: Technical writing is the most overlooked skill by software engineers and analytics professionals. This is a set of pedagogical strategies and practical tips to improve your technical writing.
+taxonomy:
+    category:
+        - internal-guides
+        - notes
+---
 
+
+## Technical Writing
+This is an instructional guide for anyone relatively new to technical writing. It is not a comprehensive guide, but it encapsulates the more important aspects of writing and offer some practical tips you can immediately incorporate into your writing. It is not specific to the analytics profession or to a particular subset of the data science profession, but it is written with that audience in mind.
 
 ### The Case for Writing Well
 > 'Notes aren't a record of my thinking process. They are my thinking process.'
 >  – Richard Feynman.
 
-- Writing is _the product_. As software engineers and data scientists, we are often tasked with writing code, and we spend an enormous amount of our life improving this skill. However, any software developers will tell you that writing code is only a small part of the job. In the industry, the **quality of your communication** is just as important as the quality of your code. Treating your writing as a product and putting it on equal footing with your code means you should strive to improve your writing (and overall communication) skills as much as you improve your coding skills.
+- Writing is _the product_. As software engineers and analytics developers, we are often tasked with writing code, and we spend an enormous amount of our life improving this skill. However, any software developers will tell you that writing code is only a small part of the job. In the industry, the **quality of your communication** is just as important as the quality of your code. Treating your writing as a product and putting it on equal footing with your code means you should strive to improve your writing (and overall communication) skills as much as you improve your coding skills.
 
 - Your ideas deserved to be judged on their merit. If you cannot write well, you are doing your ideas a disservice. You are not giving them the best chance to be understood and appreciated.
 
-- It's often the _only_ evidence of your expertise. Up to 90% of your readers will never have the opportunity to meet you in person, or code with you, or watch you deliver a live demo. This is a pretty sobering realization, because it means to the vast majority of people, that piece of writing is the key evidence of your competencies, your level of training, and your intellectual faculties. This is deeply fair, but it is best you are aware of it and work on your written communication skills as if your career depended on it. Because, sometimes, it does.
+- It's often the _only_ evidence of your expertise. Up to 90% of your readers will never have the opportunity to meet you in person, or code with you, or watch you deliver a live demo. This is a pretty sobering realization, because it means to the vast majority of people, that piece of writing is the key evidence of your competencies, your level of training, and your intellectual faculties. This is deeply unfair, but the sooner you acknowledge it, the sooner you can work on your written communication skills. 
 
 - Writing is a device for thinking. It is how you formulate ideas, before organizing them into a coherent narrative. As you edit and revise, you are forced to think about your ideas from different vantage points. It is how you form internal connections between ideas, and posits new arguments and counterarguments. A good writer foster a habit of good thinking, and a sloppy writer is often an indication of disjointed thinking.
 
