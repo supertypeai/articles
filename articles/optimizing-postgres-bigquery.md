@@ -5,7 +5,7 @@ taxonomy:
     category:
         - knowledge
         - notes
-    post-tag:
+    post_tag:
         - postgres
         - bigquery
         - analytics
