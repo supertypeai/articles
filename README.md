@@ -3,6 +3,12 @@ This repository provides a publishing gateway to our [website](https://supertype
 
 Any articles in Markdown format (`.md`), in the `/articles` subdirectory, will be published to the website's [Article](https://supertype.ai/notes) section.
 
+## Guidelines
+- Please don't use large images. Keep images to a reasonable size by sizing it down beforehand using Photoshop, GIMP, or any image editor of your choice
+- Please keep images in the `_/images` directory, and link accordingly using relative linking (e.g. `![alt text](/_images/dbt.png)`) in markdown notation
+- Use **less than 6 images* per articles ideally
+- Try to include linking to other, revelant articles on Supertype.ai's own website / blogs. This will help readers find related content and promote the work of other authors on the site. 
+
 ### Slug
 This automation considers the file name as the post slug i.e if the name of the file is `data-science-101.md` then the post slug is `/notes/data-science-101`.
 
