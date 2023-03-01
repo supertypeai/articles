@@ -43,7 +43,7 @@ Details: [Proof of Identity instructions](https://github.com/supertypeai/onboard
 ## The Fellowship Quizmaster
 Quizmasters (or "Quiz Masters") are responsible for authoring and designing the Challenge on Fellowship. They are also responsible for ensuring that the Challenge is relevant and up-to-date. Since each Challenge is essentially a feature that is shipped through GitHub Pull Requests, the Quizmaster is also responsible for a clear and concise set of instructions that will guide the learner through the process of contributing to the project.
 
-Quizmaster is an extremely central role in Fellowship, so want only the most passionate and creative software engineers to take on this role. Designing fun, but fair, and meaningful Challenges is a difficult task, and almost an artistry in itself. We hope that each Quizmaster will bring a set of meaningful open source projects to Fellowship, and design well-crafted Challenges for this new generation of software engineers.
+Quizmaster is an extremely central role in Fellowship, so we want only the most passionate and creative software engineers to take on this role. Designing fun, but fair, and meaningful Challenges is a difficult task, and almost an artistry in itself. We hope that each Quizmaster will bring a set of meaningful open source projects to Fellowship, and design well-crafted Challenges for this new generation of software engineers.
 
 ### Examples of Challenges
 
@@ -53,7 +53,7 @@ Quizmaster is an extremely central role in Fellowship, so want only the most pas
 
 - [Unit Test with Python Challenge](https://github.com/onlyphantom/emailnetwork/wiki/Supertype-Fellowship-Challenge): This might be a Challenge more suited for intermediate developers, but it is also a good Challenge. Learners are required to write unit tests for a real-world Python library, to increase the robustness and reliability of the library. It's a highly transferrable skill that is useful to any developer who wants to ship high-quality code. Completion of this Challenge awards the `python` and `unittest` badge
 
-### Becoming a Quizmasters
+### Becoming a Quizmaster
 The ideal candidate for Quizmasters are experienced developers who are already owners or maintainers of one or more open source projects. They should also have the ability, and pedagogical inclination, to formulate clear and concise instructions that take a learner through the process of making their first code contribution to the project. Quizmasters are not necessarily Mentors on Fellowship (a different role), but they should be able to provide guidance on the Challenge and constructive feedback to the learner.
 
 Perhaps the most important attributes are:
