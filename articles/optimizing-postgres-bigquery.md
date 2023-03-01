@@ -13,6 +13,23 @@ taxonomy:
         - dataops
 ---
 
+## Key Points (_TL;DR_)
+
+1. You don't optimize queries until you've seen the Query Plan. This is your `EXPLAIN ANALYZE`. 
+
+2. Sequential Scan is for when you have no other good options left. Your most common queries need to be Index Scans. This is the difference between a 14 second execution time and a 0.5 seconds execution time (99.996% improvement in performance ⚡)
+
+3. But both (1) and (2) don't work on Google BigQuery. No `EXPLAIN`, no `ANALYZE`, no index scans. Every query in BigQuery is a full table scan unless you use BigQuery's specialized optimization features.
+
+4. BigQuery compensates by adding more nodes (more parallelism) to help you achieve near constant time as your data scale. 
+
+5. Instead, use BigQuery's Query Execution Graph to look for bottlenecks and find optimization opportunities
+
+6. Also use BigQuery's Clustered Tables and Partitioned Tables for optimization
+
+The article contains screenshots, benchmark tests, and code snippets for each of the aforementioned points, so dive right in.
+
+---
 ## Building optimized analytics applications: from Postgres to BigQuery
 
 This is the first in a series of articles on building highly optimized analytics applications. We're going to start with the basic mental model: thinking about the stack of software that makes up a modern analytics application. We'll see where bottlenecks can occur at each layer of the analytics stack, and work through some concrete examples of how to diagnose and fix them.
@@ -254,3 +271,7 @@ In our hypothetical scenario, we start our diagnosis from the bottom of the anal
 With a little bit of planning and forethought, we can employ strategies like indexing, clustering, and partitioning to optimize our queries. We can also use the query plan and timing information to identify bottlenecks in our query, and use dry runs to test out our queries before we actually run them.
 
 In the next article in this series, we'll move up the stack to the "search" layer, and look at how we can further optimize our search queries so that our analysts can spend less time goofing around with "faux coffee breaks" in between waiting for their queries to finish; and actually spend more time analyzing the data.
+
+This article is part of a series on building optimized analytics infrastructure. The PDF version is also available for download here (first available on our [LinkedIn page](https://www.linkedin.com/company/supertype-ai/))
+
+- [Optimizing queries in Postgres and BigQuery](https://supertype.ai/wp-content/uploads/2023/03/optimizing-postgres-bigquery-1.pdf)
