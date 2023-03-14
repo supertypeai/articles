@@ -7,8 +7,6 @@ taxonomy:
         - notes
 ---
 
-# Data Warehouse Modernization with BigQuery
-
 In a typical data processing architecture, data warehouse is probably the most commonly used service, making it one of the most important things to be familiar with for every data practitioner. After all, data warehouse is the starting point of data consumption — it consolidates raw data coming from various sources and shares them across all of the applications that are usually used to generate reports, dashboards, etc. However, the process of setting up and configuring a data warehouse is no mean task. The capability of being able to store and organize big data is only the tip of the iceberg, while the crux of the matter lies in optimizing the data warehouse for simplicity and access and high-speed query performance. Without effective data sharing capabilities, every application in a data processing architecture that relies on the data contained in a data warehouse will be in dire straits. 
 
 Numerous data warehousing solutions are currently available on the market. For this article, we will be discussing about a data warehouse named **BigQuery** in particular. In a nutshell, this data warehouse provided by Google Cloud has a lots of implemented features which deemed it to fulfill the requirements of a modern data warehouse, which are but not limited to:
