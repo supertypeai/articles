@@ -66,7 +66,7 @@ The repository also contains `dataflow_pubsub_to_bq.py` for creating our custom 
 2. Building a custom streaming pipeline to stream the sensor data into data warehouse (BigQuery)
 3. Creating a real-time analytics dashboard
 
-![Solution architecture](_images/solution-architecture.png)
+![Solution architecture](/_images/solution-architecture.png)
 
 So what do we need to set up? The first thing you need to do is to make a virtual environment in your local machine and install the project dependencies using the following command
 
@@ -76,13 +76,13 @@ pip install -r requirements.txt
 
 You also need to enable **Cloud Pub/Sub API** and **Dataflow API** in your Google Cloud Platform project. Navigate to **API & Services** and access the library tab. From there, you can search the APIs and enable them.
 
-![Enabling APIs](_images/enable-api.png)
+![Enabling APIs](/_images/enable-api.png)
 
 Next, create a Cloud Storage bucket in your account. Feel free to choose any name and region you prefer. Use *Standard* storage class and leave the rest of the configurations as is. This bucket will be used as a temporary storage when ingesting the data into BigQuery in the later section.
 
 The last thing you need to set up is to export your Google Cloud project credentials into your local machine. This credentials will be used to allow your local machine to access the resources in your Google Cloud Platform. Navigate to **IAM & Admin** > **Service Accounts** and click on *Create Service Account*. Input any name you prefer for this service account and grant it the **Editor** and **Pub/Sub Editor** role.
 
-![Creating a service account](_images/creating-service-account.png)
+![Creating a service account](/_images/creating-service-account.png)
 
 Once the service account has been created, click on the *Actions* button on the right side of the service account and choose *Manage Keys*. Click on *Create new key* in JSON format and store them as `credentials.json` in the repository directory. The directory should now have the following structure
 
@@ -109,11 +109,11 @@ Following the steps mentioned in the setup section, we will start by integrating
 5. Subscriber sends an acknowledgment to Pub/Sub for each received message. Acknowledgment is sent to notify Pub/Sub that the subscriber has successfully received the message.
 6. Pub/Sub removes acknowledged messages from the subscription's message queue.
 
-![Pub/Sub message delivery model](_images/pubsub-delivery-model.png)
+![Pub/Sub message delivery model](/_images/pubsub-delivery-model.png)
 
 Having understood how Pub/Sub delivers messages, let's integrate it with our sensor simulation. Navigate to Pub/Sub and click on **Create Topic**. Provide `inventory-streaming` for the Topic ID and leave everything as is (*if you want to use a name of your choice for the Topic ID, make sure to change the `_topic` variable in the Python script*). By leaving the other options as default, Pub/Sub automatically creates a default subscription for the topic, having the subscription ID of `<topic_id>-sub`.
 
-![Creating Pub/Sub Topic](_images/create-pubsub-topic.png)
+![Creating Pub/Sub Topic](/_images/create-pubsub-topic.png)
 
 With our Pub/Sub all set, we can immediately start our sensor simulation. Activate your virtual environment execute the following command
 
@@ -152,7 +152,7 @@ Dataflow is based on **Apache Beam**, which unifies traditional batch programmin
 
 In short, the input data and PCollection is passed along the pipeline graph from one PTransform to another.
 
-![General Dataflow pipeline](_images/general-dataflow-pipeline.png)
+![General Dataflow pipeline](/_images/general-dataflow-pipeline.png)
 
 ### Coding the Dataflow Pipeline in Python
 
@@ -281,11 +281,11 @@ Before we deploy our pipeline, we need to create an output table in BigQuery. Un
 ]
 ```
 
-![Creating BigQuery Table](_images/creating-bigquery-table.png)
+![Creating BigQuery Table](/_images/creating-bigquery-table.png)
 
 Now we have made all the necessary preparations to deploy our pipeline into Google Cloud Platform. Before we deploy the pipeline, recall that our sensor simulation is sending 1 month worth of data into Pub/Sub, which means that populating the BigQuery table would take some time to finish. Therefore, we will now restart our sensor and pass a high speed multiplier into it. But our Pub/Sub has already retained some data from the previous sensor! Duplicated value is something we would want to avoid. Fortunately, Pub/Sub offers *Purge Message* option, which you can use by accessing Pub/Sub > Subscriptions. Go ahead and purge the messages in your Pub/Sub!
 
-![Purging Pub/Sub messages](_images/pubsub-purge-message.png)
+![Purging Pub/Sub messages](/_images/pubsub-purge-message.png)
 
 Upon purging the message, we can deploy the Dataflow pipeline (it takes some time to finish deploying the pipeline). Modify the arguments on the following command and execute them on your terminal to create a custom dataflow job. The arguments that you need to modify are those except `runner`, `num_workers`, and `max_num_workers`
 
@@ -312,11 +312,11 @@ python3 simulate_sensor.py \
 
 Remember that pipeline is represented as a directed graph in Dataflow? Try navigating to Dataflow Jobs and inspect the graph yourself! It monitors the pipeline execution details, how many elements are processed every second in every PTransform, and so on. The graph also shows the high throughput of Dataflow — it is able to ingest more than 250 rows/second into BigQuery even when we were applying custom parsing to it!
 
-![Dataflow Pipeline graph](_images/dataflow-pipeline-graph.png)
+![Dataflow Pipeline graph](/_images/dataflow-pipeline-graph.png)
 
 On the other hand, navigate to your BigQuery and see your table being populated over time. It took me 10 minutes to ingest more than 50.000 rows!
 
-![BigQuery populated table](_images/bigquery-populated-table.png)
+![BigQuery populated table](/_images/bigquery-populated-table.png)
 
 Stopping the sensor simulation will definitely stop our script from publishing data into Pub/Sub. However, stopping the Dataflow script in the terminal **will not** stop our Dataflow pipeline from processing the data. This is because we deployed our custom pipeline into Google Cloud Platform, where some cloud resources were allocated to run our streaming pipeline job. If you want to stop the pipeline later on as to not incur additional costs, simply navigate to the running Dataflow job and click on the *Stop* button.
 
