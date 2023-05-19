@@ -310,6 +310,7 @@ Next, we will make a function to process the json data obtained from `fetch_tren
 - Parse the thumbnail URL from `thumbnails`
 - Convert `viewCount`, `likeCount`, and `commentCount` to integer; and `caption` to boolean
 - Save the processed data to a new json file
+
 ```{python}
 import json
 import isodate
@@ -514,7 +515,7 @@ Now let's load the data to BigQuery by running the following code.
 load_to_bigquery('tmp_file_processed.json', 'trending_videos_test')
 ```
 
-You should see something like `Loaded 200 rows to airflow-youtube-project-386703.youtube.trending_videos_test` in the output if everything is running properly. If you want to verify the loaded data through the BigQuery UI, you can go to the <u>(BigQuery Console)[https://console.cloud.google.com/bigquery]</u> and select the `youtube` dataset. You should see the `trending_videos_test` table in the list of tables. Click on the table, then click on the `Preview` tab to see the data.
+You should see something like `Loaded 200 rows to airflow-youtube-project-386703.youtube.trending_videos_test` in the output if everything is running properly. If you want to verify the loaded data through the BigQuery UI, you can go to the <u>[BigQuery Console](https://console.cloud.google.com/bigquery)</u> and select the `youtube` dataset. You should see the `trending_videos_test` table in the list of tables. Click on the table, then click on the `Preview` tab to see the data.
 ![BigQuery table preview](/_images/ayp_bq_table_preview.png)
 
 ### Building the Airflow DAG
@@ -715,7 +716,8 @@ The next section of the code defines the DAG itself. Below are the explanations 
 - `description` parameter provides a description or summary of the DAG's purpose
 - `start_date` parameter is the date when the DAG is eligible to run tasks, which you can adjust to the current date
 - `schedule_interval` parameter defines the schedule for the DAG. Here, it is set to run daily at 10:00 AM GMT+7 according to the cron expression '0 10 * * *' and the timezone specified in the `start_date`
-- `catchup` parameter is a boolean that indicates whether the DAG should run for the past dates or not (in our case, we set it to `False` to prevent the DAG from running for the past dates)
+- `catchup` parameter is a boolean that indicates whether the DAG should run for the past dates or not (in our case, we set it to `False` to prevent the DAG from running for the past dates)  
+
 ```{python}
 @dag(dag_id='trending_youtube_dag_v1',
     default_args=default_args,
