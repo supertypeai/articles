@@ -303,8 +303,13 @@ The content of `categories.json` should look like this.
 {"1": "Film & Animation", "2": "Autos & Vehicles", "10": "Music", "15": "Pets & Animals", "17": "Sports", "18": "Short Movies", "19": "Travel & Events", "20": "Gaming", "21": "Videoblogging", "22": "People & Blogs", "23": "Comedy", "24": "Entertainment", "25": "News & Politics", "26": "Howto & Style", "27": "Education", "28": "Science & Technology", "30": "Movies", "31": "Anime/Animation", "32": "Action/Adventure", "33": "Classics", "34": "Comedy", "35": "Documentary", "36": "Drama", "37": "Family", "38": "Foreign", "39": "Horror", "40": "Sci-Fi/Fantasy", "41": "Thriller", "42": "Shorts", "43": "Shows", "44": "Trailers"}
 ```
 
-Next, we will make a function to process the json data obtained from `fetch_trending_videos` function. The function will convert the `duration` from ISO 8601 standard to seconds, convert the `tags` list to string, map the `categoryId` to the corresponding category name, and parse the thumbnail URL from `thumbnails`. Additionally, the function will also convert `viewCount`, `likeCount`, and `commentCount` to integer; and `caption` to boolean.
-Finally, we will save the processed data to a new json file.
+Next, we will make a function to process the json data obtained from `fetch_trending_videos` function. The function will do the following things:
+- Convert the `duration` from ISO 8601 standard to seconds
+- Convert the `tags` list to string
+- Map the `categoryId` to the corresponding category name
+- Parse the thumbnail URL from `thumbnails`
+- Convert `viewCount`, `likeCount`, and `commentCount` to integer; and `caption` to boolean
+- Save the processed data to a new json file
 ```{python}
 import json
 import isodate
@@ -704,7 +709,13 @@ default_args = {
 }
 ```
 
-The next section of the code defines the DAG itself. The `dag_id` parameter is a unique identifier for the DAG, which will be shown in the Airflow Webserver UI. The `default_args` parameter refers to the configuration options defined above. The `description` parameter provides a description or summary of the DAG's purpose. The `start_date` parameter is the date when the DAG is eligible to run tasks, which you can adjust to the current date. The `schedule_interval` parameter defines the schedule for the DAG. Here, it is set to run daily at 10:00 AM GMT+7 according to the cron expression '0 10 * * *' and the timezone specified in the `start_date`. The `catchup` parameter is a boolean that indicates whether the DAG should run for the past dates or not. In our case, we set it to `False` to prevent the DAG from running for the past dates.
+The next section of the code defines the DAG itself. Below are the explanations of the parameters included in the `@dag` decorator:
+- `dag_id` parameter is a unique identifier for the DAG, which will be shown in the Airflow Webserver UI 
+- `default_args` parameter refers to the configuration options defined above
+- `description` parameter provides a description or summary of the DAG's purpose
+- `start_date` parameter is the date when the DAG is eligible to run tasks, which you can adjust to the current date
+- `schedule_interval` parameter defines the schedule for the DAG. Here, it is set to run daily at 10:00 AM GMT+7 according to the cron expression '0 10 * * *' and the timezone specified in the `start_date`
+- `catchup` parameter is a boolean that indicates whether the DAG should run for the past dates or not (in our case, we set it to `False` to prevent the DAG from running for the past dates)
 ```{python}
 @dag(dag_id='trending_youtube_dag_v1',
     default_args=default_args,
