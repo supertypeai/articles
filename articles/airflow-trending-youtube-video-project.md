@@ -1,6 +1,6 @@
 ---
 title: Using Airflow and YouTube API to Automatically Retrieve Trending Videos
-post_excerpt: This article explains how to set up a workflow using Apache Airflow within a Docker environment and YouTube Data API v3 to automatically retrieve trending videos from YouTube on a daily basis. The retrieved data will be stored in BigQuery and visualized using Looker Studio.
+post_excerpt: This article explains how to set up a workflow using Apache Airflow to retrieve trending videos data from YouTube Data API v3 and store them in BigQuery.
 taxonomy:
     category:
         - knowledge
