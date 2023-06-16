@@ -1,6 +1,6 @@
 ---
 title: Twitter Sentiment Analysis - Use Cases (Part 4)
-post_excerpt: End-to-end machine learning project on sentiment analysis. In this post, we will explore some use cases of Twitter sentiment analysis and see two real examples in the field of business and social science.
+post_excerpt: End-to-end machine learning project on sentiment analysis. In this post, we will explore some use cases of Twitter sentiment analysis in the field of business and social science.
 taxonomy:
     category:
         - knowledge
