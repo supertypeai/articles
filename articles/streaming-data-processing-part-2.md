@@ -81,7 +81,7 @@ CREATE DATABASE sales;
 ```
 
 We will create a data model consisting of a fact table called `aggregated_sales` and three dimension tables: `dim_platform`, `dim_product`, and `dim_category`. The entity relationship diagram (ERD) for the data model is shown below:
-![Sales ERD](_images/sdp_sales_erd.png)
+![Sales ERD](/_images/sdp_sales_erd.png)
 
 The `aggregated_sales` table will store aggregated sales data with the following attributes: `batch_id`, `date`, `platform_id`, `product_id`, and `total_quantity`. The `batch_id` serves as the primary key for this table. It also has foreign keys `platform_id` and `product_id` that reference the primary keys of the `dim_platform` and `dim_product` tables, respectively. 
 
