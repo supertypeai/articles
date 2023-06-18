@@ -83,7 +83,7 @@ def get_last_order_id():
 def produce_message(order_id, max_product_id, max_platform_id):
     message = {}
     message["order_id"] = order_id
-    message["created_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    message["created_at"] = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     message['platform_id'] = random.randint(1, max_platform_id)
     message['product_id'] = random.randint(1, max_product_id)
     message['quantity'] = random.randint(1, 10)
@@ -145,7 +145,7 @@ Then, we define the `produce_message()` function, which is used to generate a ra
 def produce_message(order_id, max_product_id, max_platform_id):
     message = {}
     message["order_id"] = order_id
-    message["created_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    message["created_at"] = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     message['platform_id'] = random.randint(1, max_platform_id)
     message['product_id'] = random.randint(1, max_product_id)
     message['quantity'] = random.randint(1, 10)
@@ -510,11 +510,11 @@ SELECT * FROM orders;
 
 If the data is successfully written to Cassandra, you should see an output similar to the following:
 ```{cql}
-| order_id |       created_at        | customer_id | payment_method | platform_id | product_id | quantity |
-|----------|-------------------------|-------------|----------------|-------------|------------|----------|
-|    84    | 2023-06-15 13:55:19.000 |     30      |   credit card  |      3      |     8      |    9     |
-|   265    | 2023-06-15 13:55:55.000 |     866     |   credit card  |      2      |     8      |    3     |
-|    80    | 2023-06-15 13:55:18.000 |     233     |   credit card  |      1      |     4      |    3     |
+| order_id |           created_at            | customer_id | payment_method | platform_id | product_id | quantity |
+|----------|---------------------------------|-------------|----------------|-------------|------------|----------|
+|    53    | 2023-06-18 07:04:45.000000+0000 |     30      |   credit card  |      3      |     8      |    9     |
+|    55    | 2023-06-18 07:04:41.000000+0000 |     866     |   debit card   |      2      |    12      |    3     |
+|    28    | 2023-06-18 07:04:40.000000+0000 |     233     |   credit card  |      1      |     4      |    5     |
 ```
 
 And after around one minute, we can also check if the data has been successfully written to MySQL. Open another terminal and run the following commands:
@@ -531,11 +531,11 @@ SELECT * from aggregated_sales;
 
 If the data is successfully written to MySQL, you should see an output similar to the following:
 ```{sql}
-| processing_id |   processed_at   | order_date  | platform_id | product_id | total_quantity |
-|---------------|------------------|-------------|-------------|------------|----------------|
-|       1       | 2023-06-18 06:18 | 2023-06-18  |      1      |      9     |       16       |
-|       2       | 2023-06-18 06:18 | 2023-06-18  |      4      |     16     |       9        |
-|       3       | 2023-06-18 06:18 | 2023-06-18  |      1      |      7     |       4        |
+| processing_id |    processed_at     | order_date  | platform_id | product_id | total_quantity |
+|---------------|---------------------|-------------|-------------|------------|----------------|
+|       1       | 2023-06-18 07:05:00 | 2023-06-18  |      1      |      9     |       16       |
+|       2       | 2023-06-18 07:05:00 | 2023-06-18  |      4      |     16     |       9        |
+|       3       | 2023-06-18 07:05:00 | 2023-06-18  |      3      |      7     |       4        |
 ```
 
 You can keep the `producer.py` script and the Spark Streaming application running to continuously produce and process the data stream. To stop the operation, plaese follow the steps below.

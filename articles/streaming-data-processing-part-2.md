@@ -63,9 +63,9 @@ This table will be part of our OLTP database, which will store transactional dat
 
 To illustrate, here is an example of how the row in the orders table will look like:
 ```{cql}
-| order_id |       created_at        | customer_id | payment_method | platform_id | product_id | quantity |
-|----------|-------------------------|-------------|----------------|-------------|------------|----------|
-|    84    | 2023-06-15 13:55:19.000 |     30      |   credit card  |      3      |     8      |    9     |
+| order_id |           created_at            | customer_id | payment_method | platform_id | product_id | quantity |
+|----------|---------------------------------|-------------|----------------|-------------|------------|----------|
+|    53    | 2023-06-18 07:04:45.000000+0000 |     30      |   credit card  |      3      |     8      |    9     |
 ```
 
 ### OLAP Database Design and Implementation
