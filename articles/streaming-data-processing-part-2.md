@@ -1,6 +1,6 @@
 ---
-title: Streaming Data Processing - Building an OLTP, OLAP and Sales Dashboard with Open Source Stacks | OLTP and OLAP Databases Setup (Part 2)
-post_excerpt: This project showcases the implementation of a streaming data processing pipeline using open-source technologies (Kafka, Spark Streaming, Cassandra, and MySQL). In the second part of the article, we will walk through the setup of OLTP and OLAP databases.
+title: Building a Streaming Data Pipeline with Open Source Stacks | OLTP and OLAP Databases Setup (Part 2)
+post_excerpt: In the second part of the article, we will walk through the design and implementation of OLTP and OLAP databases using Cassandra and MySQL respectively.
 taxonomy:
   category:
     - knowledge
@@ -62,9 +62,11 @@ CREATE TABLE sales.orders (
 This table will be part of our OLTP database, which will store transactional data (raw order data) for our application. The orders table will have several columns including `order_id`, `created_at`, `platform_id`, `product_id`, `quantity`, `customer_id`, and `payment_method`. The order_id column will serve as the primary key for the table, ensuring uniqueness for each order. 
 
 To illustrate, here is an example of how the row in the orders table will look like:
-| order_id | created_at | product_id | platform_id | quantity |
-| - | - | - | - | - |
-| 1 | '2023-06-06T13:52:00' | 2 | 3 | 10 | 
+```{cql}
+| order_id |       created_at        | customer_id | payment_method | platform_id | product_id | quantity |
+|----------|-------------------------|-------------|----------------|-------------|------------|----------|
+|    84    | 2023-06-15 13:55:19.000 |     30      |   credit card  |      3      |     8      |    9     |
+```
 
 ### OLAP Database Design and Implementation
 
@@ -83,7 +85,7 @@ CREATE DATABASE sales;
 We will create a data model consisting of a fact table called `aggregated_sales` and three dimension tables: `dim_platform`, `dim_product`, and `dim_category`. The entity relationship diagram (ERD) for the data model is shown below:
 ![Sales ERD](/_images/sdp_sales_erd.png)
 
-The `aggregated_sales` table will store aggregated sales data with the following attributes: `batch_id`, `date`, `platform_id`, `product_id`, and `total_quantity`. The `batch_id` serves as the primary key for this table. It also has foreign keys `platform_id` and `product_id` that reference the primary keys of the `dim_platform` and `dim_product` tables, respectively. 
+The `aggregated_sales` table will store aggregated sales data in a microbatch fashion. It cosist of the following attributes: `processing_id`, `processed_at`, `order_date`, `platform_id`, `product_id`, and `total_quantity`. The `processing_id` serves as the primary key for this table. The `processed_at` column stores the timestamp when the microbatch is processed. The `order_date` column stores the date when the orders are placed. It also has foreign keys `platform_id` and `product_id` that reference the primary keys of the `dim_platform` and `dim_product` tables, respectively. The `total quantity` column stores the total quantity of products sold for a given microbatch. Since the data is aggregated in microbatches, there can be multiple rows with the same `order_date`, `platform_id`, and `product_id`, but different `processing_id`, `processed_at`, and `total_quantity` values.
 
 The `dim_platform` table represents the dimensions related to platforms and has two attributes: `platform_id` and `platform_name`. The `platform_id` serves as the primary key in this table.
 
@@ -117,12 +119,13 @@ CREATE TABLE dim_product (
   );
 
 CREATE TABLE aggregated_sales (
-  batch_id INT AUTO_INCREMENT,
-  date DATE,
+  processing_id INT AUTO_INCREMENT,
+  processed_at TIMESTAMP,
+  order_date DATE,
   platform_id INT,
   product_id INT,
   total_quantity INT,
-  PRIMARY KEY (batch_id),
+  PRIMARY KEY (processing_id),
   FOREIGN KEY (platform_id) REFERENCES dim_platform (platform_id),
   FOREIGN KEY (product_id) REFERENCES dim_product (product_id)
   );
@@ -169,6 +172,16 @@ INSERT INTO dim_product (product_id, product_name, cost_price, category_id)
 ```
 
 Note that the profit margin is represented as a decimal value relative to the cost price. For instance, consider a Diamond Ring with a cost price of $1000 and a profit margin of 0.25 (based on its category). This means that the profit is calculated as 0.25 times the cost price, resulting in $250. And the selling price of the Diamond Ring is determined by adding the cost price and profit together, which is $1250 in this case.
+
+Now you can optionally stop the Docker containers for all services by executing the following command:
+```{bash}
+docker compose stop
+```
+
+If you wish to restart the Docker containers at a later time, you can use the following command:
+```{bash}
+docker compose up -d
+```
 
 ### Conclusion
 
