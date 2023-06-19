@@ -15,6 +15,7 @@ In this project, we will explore the power of open-source technologies (Kafka, S
 Now, let's start our project by setting up the environment. To ensure reproducibility, we will utilize Docker Compose to run Kafka, Spark, Cassandra, and MySQL in Docker containers. If you are unfamiliar with Docker or Docker Compose, I highly recommend watching the following two videos to gain a better understanding of them: <u>[Hands on Introduction to Docker & Data Persistence w/ Docker Volumes](https://www.youtube.com/watch?v=bRyuhBJtJ6M&list=PLXsFtK46HZxUUAQSZRMP3g2YSvVJYoGgd)</u> and <u>[Hands on introduction to Docker Compose V2 (tutorial ft. wordpress, mysql, phpmyadmin)](https://www.youtube.com/watch?v=ZlLwDN9_Gwg&list=PLXsFtK46HZxUUAQSZRMP3g2YSvVJYoGgd&index=3)</u>.
 
 ### Setting up the environment
+For this project, I personally use Ubuntu 22.04.2 LTS through Windows Subsystem for Linux (WSL). If you are using Windows and want to ensure compatibility, you can follow the steps outlined in this <u>[video](https://www.youtube.com/watch?v=JTVww711fIY)</u> to install WSL and Linux distributions on Windows.
 
 First we will create a new project directory named `streaming_data_processing`. Then we will make a new file named `docker-compose.yml` in the project directory and copy the following code into the file.
 ```{yaml}
