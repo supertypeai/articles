@@ -7,7 +7,7 @@ taxonomy:
     - notes
 ---
 
-In the previous article (part 2), we have designed and implemented the OLTP and OLAP databases using Cassandra and MySQL respectively. In this article, we will demonstrate how to ingest and process transactional data using Kafka and Spark Streaming.
+In the previous article (part 2), we have designed and implemented the OLTP and OLAP databases using Cassandra and MySQL respectively. In this article, we will demonstrate how to ingest and process transactional data streams using Kafka and Spark Streaming.
 
 Kafka is a distributed streaming platform that excels in handling high-throughput, fault-tolerant, and real-time data streams. It provides publish-subscribe messaging system where data is organized into topics and distributed across multiple partitions. Many organizations such as LinkedIn, Netflix, and Uber use Kafka to build real-time data pipelines and streaming applications.
 
@@ -15,7 +15,7 @@ Spark Streaming is a powerful component of the Apache Spark ecosystem that enabl
 
 In our data pipeline, we utilize the power of Kafka to efficiently load the raw transactional data into Kafka topics. We will then leverage Spark Streaming to process the data in a microbatch fashion and write the processed data to the OLTP database. Simultaneously, the aggregated transactional data will be directed to the OLAP databases, allowing us to perform insightful analytical queries on the data. 
 
-By combining the strengths of Kafka, Spark Streaming, and our database infrastructure, we establish a robust and scalable data pipeline that enables real-time data processing, seamless data storage, and insightful analytics.
+By combining the strengths of Kafka, Spark Streaming, and our database infrastructure, we establish a robust and scalable data pipeline that enables (near) real-time data processing, seamless data storage, and insightful analytics.
 
 ### Getting Started with Kafka (Producing and Consuming Messages within a Topic)
 
@@ -467,7 +467,7 @@ def main():
 
 In the next part of the `main` function, we define the two streaming queries by using the `writeStream` method. The first query responsible for writing the raw transactional data to the Cassandra table, while the second query is responsible for writing the aggregated data to the MySQL table. 
 
-For the first query, we use the `write_to_cassandra` function as the processing logic within the `foreachBatch` method. The `outputMode` is set to "append", which means that only the new rows added to the Result Table since the last trigger will be outputted to the sink. The `trigger` is set to a processing time interval of 10 seconds, which determines the frequency at which microbatches are processed.
+For the first query, we use the `write_to_cassandra` function as the processing logic within the `foreachBatch` method. The `outputMode` is set to "append", which means that only the newly generated rows since the last trigger will be written to the sink (Cassandra table). The `trigger` is set to a processing time interval of 10 seconds, which determines the frequency at which microbatches are processed. Note that the lowest limit for the trigger interval is 100 milliseconds, however we should consider the underlying infrastructure and capabilities of the system/ cluster as well.
 
 Simiarly, for the second query, we use the `write_to_mysql` function as the processing logic within the `foreachBatch` method. The `outputMode` is also set to "append". The `trigger` is set to a longer processing time interval of 60 seconds, because we want to accumulate more data before performing the aggregation.
 
@@ -538,6 +538,8 @@ If the data is successfully written to MySQL, you should see an output similar t
 |       3       | 2023-06-18 07:05:00 | 2023-06-18  |      3      |      7     |       4        |
 ```
 
+Note that each record in the `aggregated_sales` table corresponds to the sum of quantities sold for a particular product on a specific platform and order date within a microbatch, which has a 1-minute interval.
+
 You can keep the `producer.py` script and the Spark Streaming application running to continuously produce and process the data stream. To stop the operation, plaese follow the steps below.
 1. Go to the terminal running the `producer.py` script and press Ctrl + C to stop the producer application. 
 2. After the producer application has been stopped, go to the terminal running the Spark Streaming application and press Ctrl + C to terminate the application. Note that the Spark Streaming application will wait around 90 seconds before it terminates.
@@ -550,6 +552,6 @@ docker compose stop
 ```
 
 ### Conclusion
-In this article, we have covered the steps involved in producing and consuming messages within a topic using Kafka. Additionally, we have successfully implemented a data pipeline that leverages Kafka and Spark Streaming to ingest and process transactional data streams. The processed data is then loaded into both OLTP and OLAP databases, enabling real-time data processing and insightful analytics. 
+In this article, we have covered the steps involved in producing and consuming messages within a topic using Kafka. Additionally, we have successfully implemented a data pipeline that leverages Kafka and Spark Streaming to ingest and process transactional data streams. The processed data is then loaded into both OLTP and OLAP databases, enabling (near) real-time data processing and insightful analytics. 
 
-In the next article (part 4), we will take our data analysis further by performing aggregations on the data stored in the OLAP database. Furthermore, we will create a (near) real-time dashboard using Streamlit to visualize the sales and profit data for the current day. This will provide a comprehensive view of the ongoing business performance and facilitate data-driven decision-making.
+In the next article (part 4), we will take our data analysis further by performing analytical queries on the data stored in the OLAP database. Furthermore, we will create a (near) real-time dashboard using Streamlit to visualize the sales and profit data for the current day. This will provide a comprehensive view of the ongoing business performance and facilitate data-driven decision-making.
