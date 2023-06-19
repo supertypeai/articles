@@ -23,7 +23,7 @@ By leveraging the strengths of Cassandra for OLTP and MySQL for OLAP, we can bui
 
 ### OLTP Database Design and Implementation
 
-First, we need to build and run all of the services defined in the `docker-compose.yml` file. To do so, navigate to the project directory and execute the following command:
+First, we need to build and run all of the services defined in the `docker-compose.yml` file. To do so, ensure you have Docker Desktop installed and running on your machine and navigate to the project directory and execute the following command:
 ```{bash}
 docker compose up -d
 ```
@@ -171,7 +171,7 @@ INSERT INTO dim_product (product_id, product_name, cost_price, category_id)
     (20, 'Hand Lotion', 10.00, 4);
 ```
 
-Note that the profit margin is represented as a decimal value relative to the cost price. For instance, consider a Diamond Ring with a cost price of $1000 and a profit margin of 0.25 (based on its category). This means that the profit is calculated as 0.25 times the cost price, resulting in $250. And the selling price of the Diamond Ring is determined by adding the cost price and profit together, which is $1250 in this case.
+Note that the `profit_margin` is represented as a decimal value relative to the `cost_price`. For instance, consider a Diamond Ring with a `cost_price` of $1000 and a `profit_margin` of 0.25 (Diamon Ring belongs to the Jewelry category). This means that the profit is calculated as 0.25 times the `cost_price`, resulting in $250. And the selling price of the Diamond Ring is determined by adding the `cost_price` and profit together, which is $1250 in this case.
 
 Now you can optionally stop the Docker containers for all services by executing the following command:
 ```{bash}
