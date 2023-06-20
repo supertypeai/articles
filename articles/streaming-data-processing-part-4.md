@@ -330,7 +330,7 @@ If you keep the `producer.py` script and the Spark Streaming application running
 Here is another preview of the dashboard after a while:
 ![Profit and Sales Dashboard 2](/_images/sdp_streamlit_dashboard_2.png)
 
-To see the updated data on the dashboard, you'll need to refresh the page. Keep in mind that the `get_view_data` function caches the query result for 60 seconds. So, there might be a slight delay before the dashboard reflects the latest data stored in the `sales_and_profit_today` view.
+Notice that the total sales and profit metrics have increased, and the bar charts have been updated accordingly. To see the updated data on the dashboard, you'll need to refresh the page. Keep in mind that the `get_view_data` function caches the query result for 60 seconds, so there might be a slight delay before the dashboard reflects the latest data stored in the `sales_and_profit_today` view.
 
 If you are done with exploring the dashboard, you can stop the Streamlit app by pressing `Ctrl + C` in the terminal. And if you are done with the project, you can stop the Docker containers by running the following command in the project directory:
 ```{bash}
