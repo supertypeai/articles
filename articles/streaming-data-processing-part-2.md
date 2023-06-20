@@ -68,6 +68,8 @@ To illustrate, here is an example of how the row in the orders table will look l
 |    53    | 2023-06-18 07:04:45.000000+0000 |     30      |   credit card  |      3      |     8      |    9     |
 ```
 
+Note that the timestamps in the `created_at` column are stored in UTC timezone, which is the default format for Cassandra.
+
 ### OLAP Database Design and Implementation
 
 Now, we will access the MySQL container and launch the MySQL shell by executing the following command:
@@ -85,7 +87,7 @@ CREATE DATABASE sales;
 We will create a data model consisting of a fact table called `aggregated_sales` and three dimension tables: `dim_platform`, `dim_product`, and `dim_category`. The entity relationship diagram (ERD) for the data model is shown below:
 ![Sales ERD](/_images/sdp_sales_erd.png)
 
-The `aggregated_sales` table will store aggregated sales data in a microbatch fashion. It cosist of the following attributes: `processing_id`, `processed_at`, `order_date`, `platform_id`, `product_id`, and `total_quantity`. The `processing_id` serves as the primary key for this table. The `processed_at` column stores the timestamp when the microbatch is processed. The `order_date` column stores the date when the orders are placed. It also has foreign keys `platform_id` and `product_id` that reference the primary keys of the `dim_platform` and `dim_product` tables, respectively. The `total quantity` column stores the total quantity of products sold for a given microbatch. Since the data is aggregated in microbatches, there can be multiple rows with the same `order_date`, `platform_id`, and `product_id`, but different `processing_id`, `processed_at`, and `total_quantity` values.
+The `aggregated_sales` table will store aggregated sales data in a microbatch fashion. It consist of the following attributes: `processing_id`, `processed_at`, `order_date`, `platform_id`, `product_id`, and `total_quantity`. The `processing_id` serves as the primary key for this table. The `processed_at` column stores the timestamp when the microbatch is processed. The `order_date` column stores the date when the orders are placed. It also has foreign keys `platform_id` and `product_id` that reference the primary keys of the `dim_platform` and `dim_product` tables, respectively. The `total quantity` column stores the total quantity of products sold for a given microbatch. Since the data is aggregated in microbatches, there can be multiple rows with the same `order_date`, `platform_id`, and `product_id`, but different `processing_id`, `processed_at`, and `total_quantity` values.
 
 The `dim_platform` table represents the dimensions related to platforms and has two attributes: `platform_id` and `platform_name`. The `platform_id` serves as the primary key in this table.
 

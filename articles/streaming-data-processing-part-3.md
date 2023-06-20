@@ -154,7 +154,7 @@ def produce_message(order_id, max_product_id, max_platform_id):
     return message
 ```
 
-Note that the values for `platform_id` and `product_id` fields are randomly generated based on the `max_platform_id` and `max_product_id` parameters. These parameters should be adjusted according to the number of platforms and products available in our database.
+Note that the `created_at` field is generated using the current date and time in UTC timezone, to ensure consistency with the `created_at` field in the Cassandra table. The values for `platform_id` and `product_id` fields are randomly generated based on the `max_platform_id` and `max_product_id` parameters. These parameters should be adjusted according to the number of platforms and products available in our database.
 
 Finally, we define the `main()` function, which is used to start the Kafka producer application.
 ```{python}
@@ -384,7 +384,7 @@ def write_to_mysql(df, epoch_id):
                     "password": MYSQL_PASSWORD}) 
 ```
 
-To create the aggregated dataframe, we first convert the `created_at` column (which contains the date and time) to a `order_date` column (which contains only the date) using the `to_date` function. Then, we aggregate the sales data and determine the total quantity of each product sold within that specific microbatch, by grouping the data based on the `order_date`, `platform_id`, and `product_id`. Note that we include the `order_date` column in the group by clause to ensure that order data from different day are not aggregated together. We also add a `processed_at` column to the aggregated dataframe to indicate the time when the data is processed. Finally the aggregated dataframe is written to the MySQL table using the `write.jdbc` method.
+To create the aggregated dataframe, we first convert the `created_at` column (which contains the date and time) to a `order_date` column (which contains only the date) using the `to_date` function. Then, we aggregate the sales data and determine the total quantity of each product sold within that specific microbatch, by grouping the data based on the `order_date`, `platform_id`, and `product_id`. Note that we include the `order_date` column in the group by clause to ensure that order data from different day are not aggregated together. We also add a `processed_at` column to the aggregated dataframe to indicate the time when the data is processed, using the `current_timestamp` function which by default returns the current time in UTC timezone. Finally the aggregated dataframe is written to the MySQL table using the `write.jdbc` method.
 
 Next, we define the `signal_handler` function which handle the interruption signal received by the application. 
 ```{python}
@@ -538,7 +538,7 @@ If the data is successfully written to MySQL, you should see an output similar t
 |       3       | 2023-06-18 07:05:00 | 2023-06-18  |      3      |      7     |       4        |
 ```
 
-Note that each record in the `aggregated_sales` table corresponds to the sum of quantities sold for a particular product on a specific platform and order date within a microbatch, which has a 1-minute interval.
+Note that each record in the `aggregated_sales` table corresponds to the sum of quantities sold for a particular product on a specific platform and order date within a microbatch, which has a 1-minute interval. The timestamps in the `processed_at` column are stored in UTC timezone, similar to the `created_at` column in the `orders` table in Cassandra.
 
 You can keep the `producer.py` script and the Spark Streaming application running to continuously produce and process the data stream. To stop the operation, plaese follow the steps below.
 1. Go to the terminal running the `producer.py` script and press Ctrl + C to stop the producer application. 
