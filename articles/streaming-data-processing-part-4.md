@@ -279,7 +279,7 @@ Here is the breakdown of the code to generate the bar chart using Altair:
 At the end of the function, the chart is displayed in the Streamlit application using the `st.altair_chart` function. The `use_container_width argument` is set to `False` to use a fixed width of 450 for the chart.
 
 Here is an example of the bar chart generated from `visualize_df_by_col(category_df, 'total_sales', 'Total Sales by Category Today', 'cyan')`:
-![Total Sales by Category Bar Chart](sdp_sales_by_category_chart)
+![Total Sales by Category Bar Chart](/_images/sdp_sales_by_category_chart.png)
 
 Finally, we design the structure of the dashboard using the code below. 
 ```{python}
@@ -323,12 +323,12 @@ External URL: http://111.94.72.117:8501
 ```
 
 To access the Streamlit app, simply copy the Network URL and paste it into your browser. You should see a dashboard similar to the one below in your browser:
-![Profit and Sales Dashboard 1](sdp_streamlit_dashboard_1)
+![Profit and Sales Dashboard 1](/_images/sdp_streamlit_dashboard_1.png)
 
 If you keep the `producer.py` script and the Spark Streaming application running (refer to the previous article), the result of `sales_and_profit_today` view will be continuously updated as new data is ingested, processed, and loaded into the `aggregated_sales` table. Therefore, the dashboard will also be updated with the latest data.
 
 Here is another preview of the dashboard after a while:
-![Profit and Sales Dashboard 2](sdp_streamlit_dashboard_2)
+![Profit and Sales Dashboard 2](/_images/sdp_streamlit_dashboard_2.png)
 
 To see the updated data on the dashboard, you'll need to refresh the page. Keep in mind that the `get_view_data` function caches the query result for 60 seconds. So, there might be a slight delay before the dashboard reflects the latest data stored in the `sales_and_profit_today` view.
 
