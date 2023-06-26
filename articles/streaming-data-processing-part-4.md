@@ -224,6 +224,7 @@ def get_view_data(view_name):
 The function establishes a connection to the MySQL database by using `st.experimental_connection`, which handles secrets retrieval (based on the credentials specified in the `secrets.toml` file), setup, query caching and retries. Once the connection is established, the function executes a query to retrieve all the data from the specified view. The `ttl` argument specifies the duration for which the query results will be cached. Since our microbatch processing interval for the aggregated data is 60 seconds, we set the `ttl` to 60 seconds as well, indicating that the query results will be cached for 60 seconds before a new query is executed.
 
 Here is a preview of the first 10 rows of the dataframe returned by the `get_view_data` function:
+
 |   | platform_name | category_name  | total_sales | total_profit |
 |---| ------------- | -------------- | ----------- | ------------ |
 | 0 | MarketPlaceX  | Personal Care  | 1,474       | 134          |
@@ -246,6 +247,7 @@ def agg_view_data(view_df, groupby_key):
 ```
 
 Here is a preview of the dataframe returned by the `agg_view_data` function with the `groupby_key` set to `platform_name`:
+
 |   | platform_name | total_sales | total_profit |
 |---|---------------|-------------|--------------|
 | 0 | BuyNow        | 83,824      | 15,674       |
