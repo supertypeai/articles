@@ -218,7 +218,7 @@ for i, x in enumerate(response_company_index.json()):
 
   ```
 
-**Step 3** Scraping External Data and Storing inside database 
+**Step 3 Scraping External Data and Storing inside database**
 
 External data sources are scraped using the BeautifulSoup library, with a GitHub Actions workflow set up to automate this process daily. This automation retrieves daily values for the interest rate, exchange rate, and 10-year Indonesian government bond rate. Since the interest rate is updated monthly, we interpolate it to a daily frequency by filling each day within the same month with the same rate.
 
