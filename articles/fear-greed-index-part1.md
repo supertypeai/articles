@@ -1,6 +1,6 @@
 ---
 title: Turning Market Sentiment into Data - Developing Fear and Greed Index (Part 1)
-post_excerpt: In the first part of the article, we will explore the methodology behind designing a Fear and Greed Index, from conceptualization to mathematical techniques, as we quantify market sentiment in real time. 
+post_excerpt: In the first part of the article, we will explore the methodology behind designing a Fear and Greed Index, from conceptualization and mathematical techniques to data gathering, as we quantify market sentiment in real time. 
 taxonomy:
     category:
         - internal-guides
@@ -78,9 +78,158 @@ This formula takes the current value and scales it based on its position between
 
 **Step 4: Modelling the Final Fear and Greed Index**
 
-Ultimately, we will obtain the daily scaled Fear and Greed Index for each selected indicator. These individual indices will then be combined using regression models to determine the weight of each indicator, resulting in the overall Fear and Greed Index for the Indonesian market. 
+Ultimately, we will obtain the daily scaled Fear and Greed Index for each selected indicator. These individual indices will then be combined using unsupervised machine learning models to determine the weight of each indicator, resulting in the overall Fear and Greed Index for the Indonesian market. 
 
-Note that in our methodology, the SMA calculation often uses percentage-based scaling, so the min-max scaling should apply to these percentage values. However, for some indicators, rather than using percentage changes from the SMA, we may simply calculate the absolute distance from the SMA and scale this using relative min and max values. The next article in this series will dive deeper into the specific calculations for each index.
+Note that in our methodology, the SMA calculation often uses percentage-based scaling, so the min-max scaling should apply to these percentage values. However, for some indicators, rather than using percentage changes from the SMA, we may simply calculate the absolute distance from the SMA and scale this using relative min and max values. The next article in this series will dive deeper into the specific calculations for each index as well as unsupervised machine learning modelling.
+
+### Data Sources for Calculating Sentiment Indices
+
+**Step 1: Identify Input Data Sources**
+
+To begin, we will gather the necessary input data required to calculate each of the predefined indices. Below is an overview of the key data points needed for these calculations:
+
+Direct Indicators of Stock Market Sentiment:
+
+- **Market Momentum**: daily stock prices changes for IDX composite 
+- **Stock Price Strength**: daily closing prices of individual stocks within the IDX Composite
+- **Volatility**: daily closing prices of the IDX Composite
+- **Volume Breadth**: daily trading volume data for stocks in the IDX Composite.
+- **Safe Haven Demand**: 10 year indonesian government bond daily rate & Indonesian stock market capitalization 
+
+Indirect Indicators of Macroeconomic Influence:
+
+- **Exchange Rate**: daily exchange rate of the Indonesian Rupiah (IDR) to the US Dollar (USD), issued by Bank Indonesia (the central bank)
+- **Interest Rate**: daily interest rate or central bank policy rate issued by Bank Indonesia
+- **Buffett Indicator**: market capitalization of the IDX Composite and Indonesia’s GDP
+
+To gather the necessary data for calculating our predefined indices, we categorize the data sources into two main groups:
+
+1. Internal Data Sources (via SectorsAPI)
+
+- Daily Stock Closing Price for IDX Composite: Used to calculate Market Momentum, Price Strength, and Volatility indices.
+- Daily Stock Trading Volume for IDX Composite: Utilized in calculating the Volume Breadth index.
+- Daily Stock Market Capitalization: Essential for the Buffett Indicator, allowing us to compute market cap-to-GDP ratios.
+
+2. External Data Sources (via Web Scraping)
+
+- [Interest Rate](https://tradingeconomics.com/indonesia/interest-rate): The daily interest rate issued by the Indonesian central bank (Bank Indonesia), used as an indicator of macroeconomic sentiment.
+- [Exchange Rate](https://tradingeconomics.com/indonesia/currency): The daily IDR-to-USD exchange rate from the Indonesian central bank, which reflects economic stability.
+- [10-Year Indonesian Government Bonds](https://tradingeconomics.com/indonesia/government-bond-yield): Yield data for 10-year government bonds, representing a benchmark for Safe Haven Demand in the market.
+
+Data from external sources are linked above. In the next step, we will utilize SectorsAPI to retrieve data from internal sources.
+
+**Step 2: Gathering Input Data from SectorsAPI**
+
+SectorsAPI offers comprehensive insights into the Indonesian stock market, allowing us to efficiently access the data needed for our analysis. First we use the company API to rend the company infomration to identify the stock tickers. 
+
+```python 
+# Retrieve Stock index from "Companies by Index" API
+import time
+import requests
+from google.colab import userdata
+
+# Retrieve the API key securely
+api_key = userdata.get('SECTORS_API_KEY')
+
+# Define the API URL
+url = "https://api.sectors.app/v1/index/idx30/"
+
+# Pass the API key in the header
+headers = {"Authorization": api_key}
+
+# Make the API request
+response_company_index = requests.get(url, headers=headers)
+
+print(response_company_index.text)
+```
+We will see the result of a list of response below.
+
+```json
+[
+  {
+    "symbol": "ACES.JK",
+    "company_name": "PT Aspirasi Hidup Indonesia Tbk"
+  },
+  {
+    "symbol": "ADRO.JK",
+    "company_name": "Adaro Energy Indonesia Tbk"
+  },
+  {
+    "symbol": "AKRA.JK",
+    "company_name": "PT AKR Corporindo Tbk."
+  }
+  ...
+]
+```
+We will now use the “Daily Transaction Data” API and create a function that loops through company tickers to retrieve the historical market data for the IDX Composite.
+
+```python
+# Retrieve date and price from "Daily Transaction Data" API
+from datetime import datetime, timedelta
+
+# Function to calculate the date 90 days ago from today
+def calculate_start_date(days_ago=90):
+    return (datetime.now() - timedelta(days=days_ago)).strftime('%Y-%m-%d')
+
+# Calculate the start date 90 days ago
+start_date = calculate_start_date()
+
+# Looping API info
+history_idx30 = []
+
+for i, x in enumerate(response_company_index.json()):
+
+  # Define the URL for the API endpoint
+  url = "https://api.sectors.app/v1/daily/" + response_company_index.json()[i]['symbol'] + "/"
+
+  # Define the query string with the calculated start date
+  querystring = {"start": start_date, "end": datetime.now().date()}
+
+  headers = {"Authorization": userdata.get('SECTORS_API_KEY')}
+
+  response_daily_transaction_data = requests.request("GET", url, headers=headers, params=querystring)
+
+  # Append the result into target list
+  history_idx30.append(response_daily_transaction_data.json())
+
+  time.sleep(1)
+  ```
+  Now if we check the result historical IDX30 data, we will have all the information we need. 
+
+  ```json
+
+[[{'symbol': 'ACES.JK',
+   'date': '2024-08-07',
+   'close': 735,
+   'volume': 43056400,
+   'market_cap': 12583493959680},
+  {'symbol': 'ACES.JK',
+   'date': '2024-08-08',
+   'close': 720,
+   'volume': 52492200,
+   'market_cap': 12326688260096},
+  {'symbol': 'ACES.JK',
+   'date': '2024-08-09',
+   'close': 720,
+   'volume': 55467000,
+   'market_cap': 12326688260096},
+...
+]]
+
+  ```
+
+**Step 3** Scraping External Data and Storing inside database 
+
+External data sources are scraped using the BeautifulSoup library, with a GitHub Actions workflow set up to automate this process daily. This automation retrieves daily values for the interest rate, exchange rate, and 10-year Indonesian government bond rate. Since the interest rate is updated monthly, we interpolate it to a daily frequency by filling each day within the same month with the same rate.
+
+The backend data pipeline setup will be discussed in detail in a separate article.
+
+With the methodology, calculations, and data sourcing now complete, we are ready to proceed to the next part of this article, where we will begin computing the indices.
+
+
+
+
+
 
 
 
