@@ -11,8 +11,6 @@ taxonomy:
 
 In the first part of this article, we examined the concept of the Fear and Greed Index, its mathematical foundation, and the data collection process. We identified eight indices—comprising both direct stock market indicators and indirect macroeconomic factors—that contribute to the overall sentiment index for the Indonesian stock market. With the data now organized into dataframes, we are ready to proceed with calculating each individual index. In this article, we will compute these indices and explore the final model for the overall Fear and Greed Index using a weighted average approach. Note that calculations involving external data sources are based on saved CSV files; the backend data processing pipeline will be covered in a separate article.
 
-![CNN-Fear-Greed-Example](/_images/cnn-f&g-example.png)
-
 ### Market Momentum Index - IDX Composite Momentum 
 
 The [Market Momentum Index](https://www.investopedia.com/terms/m/marketmomentum.asp) measures the strength and direction of recent price movements in a stock market, indicating whether the market is trending upward or downward. It’s typically calculated using the rate of change in an index or stock prices over a set period, such as the difference in the IDX Composite over the past week or month. In the context of the Fear and Greed Index, high market momentum reflects investor optimism or “greed,” while negative or weak momentum signals caution or “fear” among investors, as it suggests a potential market downturn.
