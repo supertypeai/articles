@@ -11,7 +11,7 @@ taxonomy:
 
 In the first part of this article, we examined the concept of the Fear and Greed Index, its mathematical foundation, and the data collection process. We identified eight indices—comprising both direct stock market indicators and indirect macroeconomic factors—that contribute to the overall sentiment index for the Indonesian stock market. With the data now organized into dataframes, we are ready to proceed with calculating each individual index. In this article, we will compute these indices and explore the final model for the overall Fear and Greed Index using a weighted average approach. Note that calculations involving external data sources are based on saved CSV files; the backend data processing pipeline will be covered in a separate article.
 
-![crypto-fear-greed-example](/_images/crypto_fear_greed_example.png)
+![CNN-Fear-Greed-Example](/_images/cnn-f&g-example.png)
 
 ### Market Momentum Index - IDX Composite Momentum 
 
@@ -600,7 +600,7 @@ Each model provides unique advantages. PCA highlights the indices that explain t
 By averaging the weights derived from these three methods, we benefit from the comprehensive view provided by PCA, the independence-focused insights of ICA, and the factor correlation perspectives of Factor Analysis. This blended approach creates a balanced and robust Fear and Greed Index that is sensitive to dominant, independent, and correlated drivers of market sentiment, ensuring that the final model is both versatile and representative of diverse market influences. Using the mean weights allows us to incorporate the strengths of each model, resulting in a more resilient and nuanced measure of sentiment for the Indonesian stock market.
 
 ```json
-Variable	PCA Contribution (%)	ICA Contribution (%)	Factor1 Contribution (%)	Final Weight (%)
+     Variable	   PCA(%)	ICA(%)	Factor1(%)	Final Weight (%)
 4	volumn_breadth	14.98	29.25	18.53	20.920000
 6	exchange_rate	17.59	29.16	14.85	20.533333
 2	price_strength	17.04	8.94	23.15	16.376667
