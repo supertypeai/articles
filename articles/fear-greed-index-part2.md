@@ -9,7 +9,7 @@ taxonomy:
 
 # A Step by Step Guide to Market Sentiment Analysis - Engineering Fear and Greed Index (Part 2)
 
-In the first part of this article, we examined the concept of the Fear and Greed Index, its mathematical foundation, and the data collection process. We identified eight indices—comprising both direct stock market indicators and indirect macroeconomic factors—that contribute to the overall sentiment index for the Indonesian stock market. With the data now organized into dataframes, we are ready to proceed with calculating each individual index. In this article, we will compute these indices and explore the final model for the overall Fear and Greed Index using a weighted average approach. Note that calculations involving external data sources are based on saved CSV files; the backend data processing pipeline will be covered in a separate article.
+In the first part of this article, we examined the concept of the Fear and Greed Index, its mathematical foundation, and the data collection process using [Sectors Financial API](https://sectors.app/api). We identified eight indices—comprising both direct stock market indicators and indirect macroeconomic factors—that contribute to the overall sentiment index for the Indonesian stock market. With the data now organized into dataframes, we are ready to proceed with calculating each individual index. In this article, we will compute these indices and explore the final model for the overall Fear and Greed Index using a weighted average approach. Note that calculations involving external data sources are based on saved CSV files; the backend data processing pipeline will be covered in a separate article.
 
 ### Market Momentum Index - IDX Composite Momentum 
 
@@ -17,7 +17,7 @@ The [Market Momentum Index](https://www.investopedia.com/terms/m/marketmomentum.
 
 ```python 
 
-# Create a copy from API dataframe result generated from SectorsAPI
+# Create a copy from API dataframe result generated from Sectors Financial API
 daily_data_df_momentum = df_history_idx30.copy()
 
 # Set up SMA period and min max scaling range 
@@ -216,7 +216,7 @@ date  scaled_volatility_index
 The [Volume Breadth Index](https://www.investopedia.com/terms/b/breadthindicator.asp) assesses the strength of market participation by comparing the trading volume of advancing stocks to that of declining stocks. It’s calculated by taking the difference between the volume of advancing and declining stocks, often expressed as a ratio or percentage. In the context of the Fear and Greed Index, high volume breadth reflects “greed,” showing broad investor confidence, while low or negative volume breadth indicates “fear,” as fewer stocks experience strong trading activity.
 
 ```python 
-# Create a copy of the dataframe result generated from SectorsAPI
+# Create a copy of the dataframe result generated from Sectors Financial API
 df_vb_copy = df_history_idx30.copy()
 
 # Identify advancing and declining stocks
@@ -356,7 +356,7 @@ def scale_to_100(value, min_val, max_val):
 
 # Replace any out-of-bounds values with the mean of the scaled index
 mean_value = merged_data['safe_haven_scaled'].mean()
-merged_data['safe_haven_scaled'] = merged_data['safe_haven_scaled'].apply(lambda x: mean_value if x < 0 or x > 100 else x)
+merged_data['safe_haven_scaled'] = merged_data['safe_haven_scaled'].apply(lambda x: mean_value if x <= 0 or x >= 100 else x)
 
 merged_data[['date', 'average_stock_return', 'rate', 'safe_haven_scaled']]
 ```
@@ -413,8 +413,11 @@ print('Today´s Fear and Greed Index for Exchange Rate is: ', er_df.iloc[-1,-1])
 To engineer the Fear and Greed Index for the [Buffett Indicator](https://www.longtermtrends.net/market-cap-to-gdp-the-buffett-indicator/), we calculate the Buffett Indicator as the ratio of the stock market’s total market capitalization to Indonesia’s GDP, a commonly used measure to assess market valuation relative to the overall economy. A high Buffett Indicator suggests that the market is overvalued compared to economic output, signaling “fear” due to increased caution and risk of a potential correction. Conversely, a low Buffett Indicator implies the market is undervalued, indicating “greed” as stocks appear favorable relative to economic fundamentals. Since GDP is typically reported quarterly, we convert it to a daily measure by carrying forward the latest GDP figure until the next release, using Indonesia’s [projected 2024 GDP of $1.49 trillion](https://en.wikipedia.org/wiki/Economy_of_Indonesia#:~:text=%2B%243.46%20billion%20(2021%20est.)&text=%E2%88%920.89%25%20(of%20GDP)%20(2024%20est.)&text=%24182.1%20billion%20(2024%20est.)) as a baseline. The Buffett Indicator ratio is then normalized to a 0-100 scale to align with the broader Fear and Greed Index, ensuring it accurately contributes to the overall sentiment measure.
 
 ```python 
-# Select useful input column 
-market_cap_df = market_cap_df[['date', 'market_cap']]
+# Create a copy dataframe from Sectors Financial API result 
+market_cap_df = df_history_idx30.copy()
+
+# Group by 'date' and sum the 'market_cap' for each date
+market_cap_df = market_cap_df.groupby('date')['market_cap'].sum().reset_index()
 
 # Indonesian GDP for 2024 in Indonesian Rupiah (IDR)
 # Using an approximate exchange rate: 1 USD = 15,000 IDR
@@ -424,15 +427,47 @@ indonesia_gdp_idr = 1.47 * 10**12 * usd_to_idr_exchange_rate  # 1.47 trillion US
 # Calculate Buffett Indicator
 market_cap_df['buffett_indicator'] = (market_cap_df['market_cap'] / indonesia_gdp_idr) * 100
 
-# Drop rows with NaN values in the 'buffett_indicator' column
-market_cap_df = market_cap_df.dropna(subset=['buffett_indicator'])
+from sklearn.preprocessing import MinMaxScaler
 
-# Use MinMaxScaler to scale the Buffett Indicator values between 0 and 100
+# Calculate the 7-day Simple Moving Average (SMA) of the Buffett Indicator
+market_cap_df['buffett_SMA_7'] = market_cap_df['buffett_indicator'].rolling(window=7).mean()
+
+# Fill any missing values (NaNs) in the SMA with the mean of the SMA column
+market_cap_df['buffett_SMA_7'].fillna(market_cap_df['buffett_SMA_7'].mean(), inplace=True)
+
+# Scale the Buffett Indicator to a 0-100 range using MinMaxScaler
 scaler = MinMaxScaler(feature_range=(0, 100))
-market_cap_df['buffett_indicator_scaled'] = scaler.fit_transform(market_cap_df[['buffett_indicator']])
+
+# Scale by fitting and transforming on reshaped data
+market_cap_df['buffett_scaled'] = scaler.fit_transform(market_cap_df[['buffett_SMA_7']])
+
+# Apply adjustments to keep values within 0-100 range and handle edge cases
+mean_scaled_value = market_cap_df['buffett_scaled'].mean()
+market_cap_df['buffett_scaled'] = market_cap_df['buffett_scaled'].apply(
+    lambda x: mean_scaled_value if x <= 0 or x >= 100 else x
+)
 
 market_cap_df[['date', 'buffett_indicator_scaled']]
 ```
+The result buffett indicator fear and greed index will look like this below. 
+
+```json
+date	market_cap	buffett_indicator	buffett_SMA_7	buffett_scaled
+0	2024-08-08	4613845450489856	20.924469	21.990788	77.802874
+1	2024-08-09	4630499328786432	20.999997	21.990788	77.802874
+2	2024-08-12	4649857907163136	21.087791	21.990788	77.802874
+3	2024-08-13	4683195852259328	21.238983	21.990788	77.802874
+4	2024-08-14	4709947255291904	21.360305	21.990788	77.802874
+...	...	...	...	...	...
+59	2024-10-31	4736517364776960	21.480804	21.893906	74.657994
+60	2024-11-01	4690439897612288	21.271836	21.744455	69.806641
+61	2024-11-04	4724848383229952	21.427884	21.644901	66.575003
+62	2024-11-05	4741614034485248	21.503919	21.547028	63.397911
+63	2024-11-06	1836315811250176	8.327963	19.593988	77.802874
+
+```
+![buffett-indicator](/_images/buffett_indicator.png)
+
 ### Modelling for Final Indonesian Fear and Greed Index 
 
 Now that we have calculated all eight individual indices for the Fear and Greed Index, we have consolidated these results into a single dataframe, allowing us to model the final combined index. Our goal is to determine the weight or contribution of each index to the overall sentiment score, capturing both explicit contributions and any latent patterns among the indices. By identifying these weights, we aim to quantify how each index—such as market momentum, exchange rate, or safe haven demand—uniquely influences the Indonesian stock market’s sentiment landscape. This modeling step is critical to ensure that the final Fear and Greed Index accurately reflects the combined impact of diverse economic and market indicators.
@@ -443,6 +478,7 @@ Given the absence of a pre-defined “ground truth” for an overall fear and gr
 
 ```python 
 from sklearn.preprocessing import StandardScaler
+
 # Standardize the data to have mean 0 and standard deviation 1
 scaler = StandardScaler()
 numeric_df_scaled = scaler.fit_transform(numeric_df)
@@ -463,15 +499,17 @@ for i, variance in enumerate(explained_variance, 1):
 We will see below how each component contributes to the variance. 
 
 ```json
-Principal Component 1: 36.42% of the variance explained
-Principal Component 2: 26.88% of the variance explained
-Principal Component 3: 12.76% of the variance explained
-Principal Component 4: 10.65% of the variance explained
-Principal Component 5: 5.47% of the variance explained
-Principal Component 6: 4.51% of the variance explained
-Principal Component 7: 1.95% of the variance explained
-Principal Component 8: 1.36% of the variance explained
+Principal Component 1: 33.96% of the variance explained
+Principal Component 2: 26.98% of the variance explained
+Principal Component 3: 12.95% of the variance explained
+Principal Component 4: 10.56% of the variance explained
+Principal Component 5: 6.77% of the variance explained
+Principal Component 6: 4.34% of the variance explained
+Principal Component 7: 3.14% of the variance explained
+Principal Component 8: 1.30% of the variance explained
 ```
+![PCA_Visualization](/_images/PCA_visual.png)
+
 Next, we will get the loadings and calculate the absolute contributions and normalize them to get percentage. 
 
 ```python
@@ -486,18 +524,18 @@ loadings_percent = 100 * abs(loadings) / abs(loadings).sum()
 contributions = pd.DataFrame({'Variable': variable_names, 'Contribution (%)': loadings_percent})
 contributions.sort_values(by='Contribution (%)', ascending=False, inplace=True)
 ```
-The PCA analysis shows that market momentum, exchange rate, and price strength are the top contributors to the Fear and Greed Index, with contributions of around 18%, 17.6%, and 17% respectively. These high values suggest that market sentiment is strongly influenced by recent price movements, currency stability, and the strength of stock prices. Volume breadth and the Buffett Indicator also have moderate contributions (approximately 15% and 13%), indicating that broader market participation and valuation relative to GDP play important roles. In contrast, volatility, safe haven demand, and especially interest rate have lower contributions, suggesting they have a more limited impact on the overall sentiment in this model. This distribution highlights that investor sentiment in the Indonesian market is driven primarily by direct market performance indicators and exchange rate stability.
+ PCA suggests that the price strength, market momentum, and volume breadth indices are the primary contributors, collectively explaining over 70% of the variance. This indicates that market performance indicators are the most significant drivers of sentiment in the Fear and Greed Index. Exchange rate and buffett indicator contribute moderately, with the smallest contributions from interest rate, safe haven demand, and volatility. This distribution implies that macroeconomic factors like interest rates and volatility are less central to market sentiment under this method, making PCA suitable if the goal is to capture variance driven primarily by direct market indicators.
 
 ```json
 Variable	Contribution (%)
-0	market_momentum	18.538131
-6	exchange_rate	17.586832
-2	price_strength	17.038441
-4	volumn_breadth	14.983672
-3	buffett_indicator	13.195301
-1	volatility	9.487410
-5	safe_heaven	6.170997
-7	interest_rate	2.999218
+2	price_strength	24.686142
+0	market_momentum	23.786931
+4	volumn_breadth	23.425010
+6	exchange_rate	12.510847
+3	buffett_indicator	8.480610
+7	interest_rate	3.424652
+5	safe_heaven	2.084997
+1	volatility	1.600812
 ```
 *** Independent Component Analysis ***
 
@@ -526,19 +564,19 @@ ica_contributions_df.sort_values(by='ICA Contribution (%)', ascending=False, inp
 print("Independent Component Analysis (ICA) Contributions:\n", ica_contributions_df)
 
 ```
-The ICA analysis indicates that volume breadth and exchange rate are the dominant contributors to the Fear and Greed Index, with contributions around 29% each. This suggests that broad market participation and currency stability are key independent drivers of sentiment, likely reflecting investor confidence and economic stability. The Buffett Indicator also contributes significantly (18%), indicating that overall market valuation relative to GDP is an important factor in market sentiment. In contrast, price strength, market momentum, and volatility have smaller contributions (under 9%), while safe haven demand and interest rate have minimal influence in this independent component framework. This result implies that sentiment in the Indonesian market is most strongly shaped by broad market dynamics and macroeconomic stability rather than specific price movements or safe-haven assets.
+ICA highlights price strength (35%) and market momentum (29%) as the most independent drivers of sentiment, with buffett indicator and volume breadth also playing moderate roles. However, exchange rate, volatility, and interest rate contribute minimally, showing that they provide little unique, independent information for sentiment. ICA’s emphasis on price strength and market momentum suggests that these indices capture distinct, non-overlapping signals that directly impact investor sentiment. ICA is advantageous if we prioritize unique, independent indicators of fear and greed, as it filters out redundancy.
 
 ```json
 Independent Component Analysis (ICA) Contributions:
              Variable  ICA Contribution (%)
-4     volumn_breadth             29.250553
-6      exchange_rate             29.155509
-3  buffett_indicator             18.314223
-2     price_strength              8.941634
-0    market_momentum              6.097687
-1         volatility              5.561563
-5        safe_heaven              2.060825
-7      interest_rate              0.618005
+2     price_strength             35.217306
+0    market_momentum             29.382728
+3  buffett_indicator             16.666646
+4     volumn_breadth             11.988487
+6      exchange_rate              4.112347
+1         volatility              1.760180
+5        safe_heaven              0.723589
+7      interest_rate              0.148717
 ```
 ***Factor Analysis**
 
@@ -557,14 +595,14 @@ factor_loadings_df
 ```
 ```json
 	Factor1	Factor2	Factor1 Contribution (%)
-market_momentum	-0.883596	0.137230	23.126012
-volatility	0.188058	0.695190	4.921962
-price_strength	-0.884621	0.308945	23.152834
-buffett_indicator	0.354879	0.751056	9.288099
-volumn_breadth	-0.708119	0.220054	18.533305
-safe_heaven	0.232037	-0.025614	6.072998
-exchange_rate	-0.567351	-0.696712	14.849061
-interest_rate	-0.002129	0.340527	0.055730
+market_momentum	-0.885500	-0.006721	26.152412
+volatility	0.078254	0.734272	2.311153
+price_strength	-0.925022	0.158749	27.319637
+buffett_indicator	-0.197961	0.579523	5.846599
+volumn_breadth	-0.747953	0.075496	22.090072
+safe_heaven	0.045285	-0.182631	1.337452
+exchange_rate	-0.441639	-0.755679	13.043400
+interest_rate	-0.064308	0.359978	1.899275
 ```
 ```python
 # Calculate contribution percentages for the first factor to interpret as potential weights
@@ -574,39 +612,49 @@ factor_loadings_df['Factor1 Contribution (%)'] = factor1_contributions
 # Display factor loadings and contributions
 print("Factor Analysis Loadings:\n", factor_loadings_df)
 ```
-The Factor Analysis results indicate that market momentum and price strength are the strongest contributors to Factor 1, with contributions of approximately 23% each. This suggests that these indices are highly correlated with a shared sentiment factor, likely reflecting overall market optimism or pessimism. Volume breadth and exchange rate also show notable contributions (18.5% and 14.8%, respectively), indicating their relevance to this common sentiment factor, especially in terms of market participation and currency stability. The Buffett Indicator and volatility contribute more significantly to Factor 2, suggesting that they might reflect a separate latent factor related to valuation and economic risk. Safe haven demand has a modest contribution to Factor 1, while interest rate contributes minimally, indicating it has little influence on the primary sentiment factor in this model. Overall, the results imply that sentiment is strongly tied to direct market performance and economic indicators, with secondary influences from broader economic risk factors.
+Factor Analysis provides a balanced view, revealing that price strength, market momentum, and volume breadth are also the dominant components in the primary latent factor (Factor 1). However, exchange rate and buffett indicator contribute more here than in PCA or ICA, suggesting that these indices are part of a correlated sentiment factor that includes macroeconomic stability indicators. Volatility also emerges as significant in a secondary factor, indicating a separate dimension of risk sentiment. Factor Analysis thus implies that sentiment is multifaceted, with broader market indicators driving one aspect and macroeconomic factors influencing another, more risk-oriented dimension.
 
 ```json
 Factor Analysis Loadings:
                      Factor1   Factor2  Factor1 Contribution (%)
-market_momentum   -0.883596  0.137230                 23.126012
-volatility         0.188058  0.695190                  4.921962
-price_strength    -0.884621  0.308945                 23.152834
-buffett_indicator  0.354879  0.751056                  9.288099
-volumn_breadth    -0.708119  0.220054                 18.533305
-safe_heaven        0.232037 -0.025614                  6.072998
-exchange_rate     -0.567351 -0.696712                 14.849061
-interest_rate     -0.002129  0.340527                  0.055730
+market_momentum   -0.885500 -0.006721                 26.152412
+volatility         0.078254  0.734272                  2.311153
+price_strength    -0.925022  0.158749                 27.319637
+buffett_indicator -0.197961  0.579523                  5.846599
+volumn_breadth    -0.747953  0.075496                 22.090072
+safe_heaven        0.045285 -0.182631                  1.337452
+exchange_rate     -0.441639 -0.755679                 13.043400
+interest_rate     -0.064308  0.359978                  1.899275
 ```
 
 *** Final Decision ***
 
 In conclusion, after comparing the results of the PCA, ICA, and Factor Analysis models, the final decision is to use the mean of the three sets of weights as the basis for constructing the overall Fear and Greed Index for the Indonesian stock market. This approach balances the distinct insights each model offers, combining variance maximization, independence detection, and latent factor representation to create a more comprehensive sentiment index.
 
-Each model provides unique advantages. PCA highlights the indices that explain the most variance in the data, underscoring the influence of indices like market momentum and exchange rate on the overall sentiment. This approach captures the dominant factors but may overlook unique contributions from less correlated indices. ICA, on the other hand, identifies independent sources of sentiment, emphasizing the influence of volume breadth and exchange rate as distinct drivers of market sentiment. While ICA offers valuable insights into independent sentiment components, it may understate the influence of interrelated factors that affect multiple indices simultaneously. Factor Analysis provides a middle ground by identifying latent factors shared among indices, showing that market momentum, price strength, and volume breadth align closely with a common sentiment factor, while volatility and Buffett Indicator represent a separate dimension of market risk.
+Each model provides unique advantages. PCA highlights the indices that explain the most variance in the data, underscoring the influence of indices like market momentum and exchange rate on the overall sentiment. This approach captures the dominant factors but may overlook unique contributions from less correlated indices. ICA, on the other hand, identifies independent sources of sentiment, emphasizing the influence of volume breadth and exchange rate as distinct drivers of market sentiment. While ICA offers valuable insights into independent sentiment components, it may understate the influence of interrelated factors that affect multiple indices simultaneously. Factor Analysis provides a middle ground by identifying latent factors shared among indices, showing that market momentum, price strength, and volume breadth align closely with a common sentiment factor, while volatility and interest rate represent a separate dimension of market risk.
 
 By averaging the weights derived from these three methods, we benefit from the comprehensive view provided by PCA, the independence-focused insights of ICA, and the factor correlation perspectives of Factor Analysis. This blended approach creates a balanced and robust Fear and Greed Index that is sensitive to dominant, independent, and correlated drivers of market sentiment, ensuring that the final model is both versatile and representative of diverse market influences. Using the mean weights allows us to incorporate the strengths of each model, resulting in a more resilient and nuanced measure of sentiment for the Indonesian stock market.
 
 ```json
-     Variable	   PCA(%)	ICA(%)	Factor1(%)	Final Weight (%)
-4	volumn_breadth	14.98	29.25	18.53	20.920000
-6	exchange_rate	17.59	29.16	14.85	20.533333
-2	price_strength	17.04	8.94	23.15	16.376667
-0	market_momentum	18.54	6.10	23.13	15.923333
-3	buffett_indicator	13.20	18.31	9.29	13.600000
-1	volatility	9.49	5.56	4.92	6.656667
-5	safe_heaven	6.17	2.06	6.07	4.766667
-7	interest_rate	3.00	0.62	0.06	1.226667
+               Variable  PCA Contribution (%)  ICA Contribution (%)  \
+0     price_strength             24.686142             35.217306   
+1    market_momentum             23.786931             29.382728   
+2     volumn_breadth             23.425010             11.988487   
+3      exchange_rate             12.510847              4.112347   
+4  buffett_indicator              8.480610             16.666646   
+5      interest_rate              3.424652              0.148717   
+6        safe_heaven              2.084997              0.723589   
+7         volatility              1.600812              1.760180   
+
+   Factor1 Contribution (%)  Weighted Average (%)  
+0                 27.319637             29.074362  
+1                 26.152412             26.440690  
+2                 22.090072             19.167856  
+3                 13.043400              9.888865  
+4                  5.846599             10.331285  
+5                  1.899275              1.824215  
+6                  1.337452              1.382013  
+7                  2.311153              1.890715  
 ```
 
 

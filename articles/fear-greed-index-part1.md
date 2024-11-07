@@ -104,7 +104,7 @@ Indirect Indicators of Macroeconomic Influence:
 
 To gather the necessary data for calculating our predefined indices, we categorize the data sources into two main groups:
 
-1. Internal Data Sources (via SectorsAPI)
+1. Internal Data Sources (via [Sectors Financial API](https://sectors.app/api))
 
 - Daily Stock Closing Price for IDX Composite: Used to calculate Market Momentum, Price Strength, and Volatility indices.
 - Daily Stock Trading Volume for IDX Composite: Utilized in calculating the Volume Breadth index.
@@ -116,11 +116,11 @@ To gather the necessary data for calculating our predefined indices, we categori
 - [Exchange Rate](https://tradingeconomics.com/indonesia/currency): The daily IDR-to-USD exchange rate from the Indonesian central bank, which reflects economic stability.
 - [10-Year Indonesian Government Bonds](https://tradingeconomics.com/indonesia/government-bond-yield): Yield data for 10-year government bonds, representing a benchmark for Safe Haven Demand in the market.
 
-Data from external sources are linked above. In the next step, we will utilize SectorsAPI to retrieve data from internal sources.
+Data from external sources are linked above. In the next step, we will utilize [Sectors Financial API](https://sectors.app/api) to retrieve data from internal sources.
 
-**Step 2: Gathering Input Data from SectorsAPI**
+**Step 2: Gathering Input Data from [Sectors Financial API](https://sectors.app/api)**
 
-SectorsAPI offers comprehensive insights into the Indonesian stock market, allowing us to efficiently access the data needed for our analysis. First we use the company API to rend the company infomration to identify the stock tickers. 
+[Sectors Financial API](https://sectors.app/api) offers comprehensive insights into the Indonesian stock market, allowing us to efficiently access the data needed for our analysis. First we use the company API to rend the company information to identify the stock tickers. 
 
 ```python 
 # Retrieve Stock index from "Companies by Index" API
