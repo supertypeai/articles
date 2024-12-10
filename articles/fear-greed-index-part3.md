@@ -13,7 +13,7 @@ In the first and second part of this article, we explored the concept of Fear an
 
 ## Data Sourcing
 
-### Planning & Identifying Data Sources
+### <a name="planning--identifying-data-sources">Planning & Identifying Data Sources</a>
 To identify what data are going to be needed, we first take a look at the indices we are using.
 - **Market Momentum**: IDX daily data
 - **Stock Price Strength**: IDX daily data
@@ -38,10 +38,10 @@ To identify what data are going to be needed, we first take a look at the indice
 ### Scouting the Data Sources
 Based on the plan discussed previously, it is time to explore the data sources.
 
-1. #### IDX Daily Data
-    Since Sectors already has complete daily data of IDX stock prices, we can directly use the data stored in the database. The data is complete and has been quality checked by the team. To limit the data size however, we only pick the IDX30 stocks for the calculation. This index list is accessed from [sectors_indices_company_list repo](https://github.com/supertypeai/sectors_indices_company_list)
+1. #### <a name="idx-daily-data">IDX Daily Data</a>
+    Since Sectors already has complete daily data of IDX stock prices, we can directly use the data stored in the database. The data is complete and has been quality checked by the team. To limit the data size however, we only pick the IDX30 stocks for the calculation. This index list is accessed from [sectors_indices_company_list](https://github.com/supertypeai/sectors_indices_company_list) repository.
 
-2. #### Indonesian Bonds Data
+2. #### <a name="indonesian-bonds-data">Indonesian Bonds Data</a>
     The current data warehouse has not dealt with Indonesian bonds data, so it doesn't store any bonds data, and it doesn't have any pipeline sourcing bonds data yet. The best quality of data that we can get is from [PHEI](https://www.phei.co.id/Data/Indeks), the authoritative Indonesian bonds indexer. However, PHEI does not provide historical data and so we can only collect one data point a day. After searching for data sources online, we came across [Indonesia's 10Y bond yield from investing.com](https://investing.com/rates-bonds/indonesia-10-year-bond-yield-historical-data). This data source seemed good since it reflects the government bonds that we manually cross checked from bond brokers. We chose to go with this source for the initial calculation while we wait for data from PHEI accumulates over time in with our pipeline.
 
 3. #### USD/IDR Exchange Rate Data
@@ -56,7 +56,7 @@ Based on the plan discussed previously, it is time to explore the data sources.
     Just like [IDX daily data](#idx-daily-data), this data is readily available in the database and can be processed directly from the same dataset of IDX daily data. However, since we are running on resource constraint (the batch process is run on Github Actions), we choose to fetch the data from [Sector](https://sectors.app/api)'s [market cap API](https://api.sectors.app/v1/idx-total/). Not only does this saves on computational costs, but we expect that using this API can save on costs overall since the API results can be cached by the Sectors App.
 
 ## Data Fetching & Processing
-After identifying the data sources for the data pipeline, it is now time to fetch and process them
+After identifying the data sources for the data pipeline, it is now time to fetch and process them.
 
 0. ### Setting Up & Design
     The main components that play huge roles for the data processing are:
@@ -95,9 +95,9 @@ After identifying the data sources for the data pipeline, it is now time to fetc
 
     4. Execute request repeatedly with different start and end date until the maximum past date is reached with the Supabase client.
 
-    5. Parse the JSON responses into Pandas DataFrame, and return the final result
+    5. Parse the JSON responses into Pandas DataFrame, and return the final result.
 
-2. ### Indonesian Bonds Data:
+2. ### <a name="indonesian-bonds-data-1">Indonesian Bonds Data</a>:
     As we have discussed in the [Indonesian Bonds Data](#indonesian-bonds-data) section, there are two data sources used initially for the data pipeline. Each has its own API, which will be discussed separately below.
 
     `fetch_bonds_rate(timeframe: int, force_refresh: bool)`
@@ -108,17 +108,17 @@ After identifying the data sources for the data pipeline, it is now time to fetc
 
     The data processing consists of:
 
-    1. Read the locally stored data into Pandas DataFrame
+    1. Read the locally stored data into Pandas DataFrame.
 
-    2. Fetch the current date's data from the website
+    2. Fetch the current date's data from the website.
 
-    3. Parse the data from HTML tags, then convert the data into Pandas DataFrame
+    3. Parse the data from HTML tags, then convert the data into Pandas DataFrame.
 
-    4. Combine the two DataFrame
+    4. Combine the two DataFrame.
 
-    5. Write the combined result into the same file
+    5. Write the combined result into the same file.
 
-    6. Filter the result to be within the timeframe, then return the final result
+    6. Filter the result to be within the timeframe, then return the final result.
 
     Note that this data source provides the current date in human format, specifically in the Indonesian date format. To parse the date, we first switch the locale into Indonesian, parse the date, and return the locale to its original state with the `override_locale` function.
 
@@ -132,19 +132,19 @@ After identifying the data sources for the data pipeline, it is now time to fetc
 
     The data processing consists of:
 
-    1. Read the locally stored data into Pandas DataFrame
+    1. Read the locally stored data into Pandas DataFrame.
 
-    2. Check today's date vs latest date in the file
+    2. Check today's date vs latest date in the file.
 
-    3. If today's date > latest date, make a request fot the webpage
+    3. If today's date > latest date, make a request fot the webpage.
 
-    4. Parse the data from HTML tags, then convert the data into Pandas DataFrame
+    4. Parse the data from HTML tags, then convert the data into Pandas DataFrame.
 
-    5. Combine the two DataFrame
+    5. Combine the two DataFrame.
 
-    6. Write the combined result into the same file
+    6. Write the combined result into the same file.
 
-    7. Filter the result to be within the timeframe, then return the final result
+    7. Filter the result to be within the timeframe, then return the final result.
 
 3. ### USD/IDR Exchange Rate Data
     `fetch_idr_usd_rate(timeframe: int)`
@@ -153,17 +153,17 @@ After identifying the data sources for the data pipeline, it is now time to fetc
 
     Just like the previous examples, the data processing consists of:
 
-    1. Read the locally stored data into Pandas DataFrame
+    1. Read the locally stored data into Pandas DataFrame.
 
-    2. Make requests from the latest date in the file until today's date to update until today's data
+    2. Make requests from the latest date in the file until today's date to update until today's data.
 
-    3. Transform the new data into a Pandas DataFrame
+    3. Transform the new data into a Pandas DataFrame.
 
-    4. Combine the two DataFrame
+    4. Combine the two DataFrame.
 
-    5. Write the combined result into the same file
+    5. Write the combined result into the same file.
 
-    6. Filter the result to be within the timeframe, then return the final result
+    6. Filter the result to be within the timeframe, then return the final result.
 
 4. ### IDR Interest Rate Data
     `fetch_idr_interest_rate(timeframe: int)`
@@ -172,19 +172,19 @@ After identifying the data sources for the data pipeline, it is now time to fetc
 
     The data processing consists of:
 
-    1. Read the locally stored data into Pandas DataFrame
+    1. Read the locally stored data into Pandas DataFrame.
 
-    2. Check today's month vs latest month in the file
+    2. Check today's month vs latest month in the file.
 
-    3. If today's date > latest date, make a request fot the webpage
+    3. If today's date > latest date, make a request fot the webpage.
 
-    4. Parse the data from HTML tags, then convert the data into Pandas DataFrame
+    4. Parse the data from HTML tags, then convert the data into Pandas DataFrame.
 
-    5. Combine the two DataFrame
+    5. Combine the two DataFrame.
 
-    6. Write the combined result into the same file
+    6. Write the combined result into the same file.
 
-    7. Filter the result to be within the timeframe, then return the final result
+    7. Filter the result to be within the timeframe, then return the final result.
 
     Just like the data from PHEI in the [Indonesian Bonds Data](#indonesian-bonds-data-1) section, the website provides the date in human readable format, specifically in the Indonesian date format. To parse the date, we first switch the locale into Indonesian, parse the date, and return the locale to its original state with the `override_locale` function.
 
@@ -205,7 +205,7 @@ After identifying the data sources for the data pipeline, it is now time to fetc
 ## Fear and Greed Index Processing
 
 ### Programming Paradigm
-Calculating the Fear and Greed's intermediary indices is done using functions (including the data fetching APIs). Although this causes the import of the functions to be too verbose, this prevents the unintended usage of object oriented (OOP) approach in the future when we need to extend this in the future. We avoid using OOP approach for the calculation because it does not go well with the nature of the calculation, where we only require a determined output of some inputs, without changing any states (or put another way, causing "side effects"). This is safer and easier to maintain, especially for a pipeline where multiple calculations are done independently.
+Calculating the Fear and Greed's intermediary indices is done using functions (including the data fetching APIs). Although this causes the import of the functions to be too verbose, this prevents the unintended usage of object oriented (OOP) approach when we need to extend this in the future. We avoid using OOP approach for the calculation because it does not go well with the nature of the calculation, where we only require a determined output of some inputs, without changing any states (or put another way, causing "side effects"). This is safer and easier to maintain, especially for a pipeline where multiple calculations are done independently.
 
 The output of several indices can then be fed into another function to calculate the final Fear and Greed Index. This however, requires a huge amount of parameter since we are dealing with multiple indices. Another approach would be to wrap around all the indices calculation into a single function, accepting the raw data as input, and outputting the final Fear and Greed Index while the calculation of the intermediary indices is hidden within the function. This also allows the intermediary indices parameters to be configured by the Fear and Greed-related parameters, separating isolating the concern to within the function.
 
