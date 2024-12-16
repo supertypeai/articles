@@ -1,22 +1,22 @@
 ---
 title: Turning Market Sentiment into Data - Developing Fear and Greed Index (Part 1)
-post_excerpt: In the first part of the article, we will explore the methodology behind designing a Fear and Greed Index, from conceptualization and mathematical techniques to data gathering, as we quantify market sentiment in real time. 
+post_excerpt: In the first part of the article, we will explore the methodology behind designing a Fear and Greed Index, from conceptualization and mathematical techniques to data gathering, as we quantify market sentiment in real time.
 taxonomy:
-    category:
-        - internal-guides
-        - notes
+  category:
+    - knowledge
+    - notes
 ---
 
 # A Step by Step Guide to Market Sentiment Analysis - Conceptualization and Methodology (Part 1)
 
-### Understanding the concept of CNN's Fear and Greed Index 
+### Understanding the concept of CNN's Fear and Greed Index
 
 The Fear and Greed Index, first introduced by [CNNMoney](https://edition.cnn.com/markets/fear-and-greed), is a tool that measures investor sentiment to help gauge overall market conditions. It’s built on the notion that excessive fear often drives asset prices down, while excessive greed can inflate them, potentially creating bubbles. The index combines seven market indicators, each contributing to a composite score ranging from 0 to 100. Lower scores indicate extreme fear, while higher scores reflect extreme greed.
 
 The seven components of the index cover key areas of the market:
 
 - **Stock Price Momentum**: looks at the S&P 500’s movement relative to its 125-day average, showing bullish or bearish trends.
-- **Stock Price Strength**: examines the number of stocks reaching 52-week highs versus lows, while Stock Price Breadth measures market volume, indicating the level of participation in market moves. 
+- **Stock Price Strength**: examines the number of stocks reaching 52-week highs versus lows, while Stock Price Breadth measures market volume, indicating the level of participation in market moves.
 - **Put and Call Ratio**: assess sentiment by analyzing the trading volume of options for buying versus those for selling.
 - **Market Volatility**: represented by the VIX Index, reflects uncertainty or stability in the market.
 - **Safe Haven Demand**: compares stock performance with that of bonds, a safe haven asset, to indicate risk appetite.
@@ -26,14 +26,14 @@ The seven components of the index cover key areas of the market:
 
 Each of these components is given a score from 0 to 100, and the total score offers a snapshot of the market’s emotional state. For investors, the Fear and Greed Index can serve as a valuable tool for identifying potential turning points. Extreme fear may signal a buying opportunity as prices drop, while extreme greed could suggest caution, as markets might be overextended. By tracking sentiment, the Fear and Greed Index acts as a useful complement to fundamental and technical analysis, offering an additional layer for assessing market risks and opportunities.
 
-### Developing the Index for the Indonesian Stock Market 
+### Developing the Index for the Indonesian Stock Market
 
 Inspired by CNN’s methodology, our objective is to develop a Fear and Greed Index specifically tailored to the Indonesian stock market. This index will rely on relevant data and indicators that effectively capture the unique dynamics of Indonesia’s financial environment. While CNN’s index provides a broad view of global market sentiment, adapting it for Indonesia will allow us to incorporate local factors that influence market behavior, especially those related to regional economic conditions and investor psychology. In particular, adding macroeconomic indicators such as interest rates, exchange rates, and the Buffett Indicator offers insights into the market’s sensitivity to broader economic shifts. These additional factors are essential for accurately gauging sentiment in a developing economy, where external economic influences can have pronounced effects on local market sentiment.
 
 Data availability is a key consideration in defining this index. For instance, while put and call ratios are integral to CNN’s index, the Indonesian stock market lacks sufficient options trading volume and reporting standards for these metrics. As a result, we’ll focus on accessible, high-impact indicators that offer direct and indirect measures of investor sentiment.
 
 Direct Indicators of Stock Market Sentiment:
-    
+
 - **Market Momentum**: IDX Composite momentum, capturing broader market direction.
 - **Stock Price Strength**: Proportion of stocks hitting new highs versus lows.
 - **Volatility**: Measuring market stability or uncertainty.
@@ -54,7 +54,7 @@ To create an effective Fear and Greed Index tailored for the Indonesian stock ma
 
 **Step 1: Understanding Simple Moving Average Method (SMA)**
 
-The Simple Moving Average (SMA) method is a valuable tool in constructing a Fear and Greed Index as it smooths out short-term fluctuations, revealing overall trends. By averaging the last  N (as you define)  data points, SMA helps to reduce market noise, making it easier to detect real shifts in sentiment rather than reacting to daily volatility. This approach is adaptable to different types of data: for example, in market momentum, SMA is applied to stock closing prices, while in volatility, it may be calculated using daily changes in price or index values. 
+The Simple Moving Average (SMA) method is a valuable tool in constructing a Fear and Greed Index as it smooths out short-term fluctuations, revealing overall trends. By averaging the last N (as you define) data points, SMA helps to reduce market noise, making it easier to detect real shifts in sentiment rather than reacting to daily volatility. This approach is adaptable to different types of data: for example, in market momentum, SMA is applied to stock closing prices, while in volatility, it may be calculated using daily changes in price or index values.
 
 ![SMA Formula](/_images/sma_formula.png)
 
@@ -62,7 +62,7 @@ For our purposes, we chose a 7-day SMA to capture market trends without overemph
 
 **Step 2: Calculating Distance from SMA**
 
-In this step, we calculate the distance from the SMA based on the percentage change of each indicator rather than using absolute values. This approach standardizes the data, making it easier to interpret relative deviations across different indicators. 
+In this step, we calculate the distance from the SMA based on the percentage change of each indicator rather than using absolute values. This approach standardizes the data, making it easier to interpret relative deviations across different indicators.
 
 ![Distance SMA Formula](/_images/distance_sma_formula.png)
 
@@ -70,7 +70,7 @@ For each indicator, the daily percentage change is firstly calculated, and then 
 
 **Step 3: Scaling the Distance to a 0-100 Fear and Greed Index**
 
-Now that we have calculated the percentage change for each indicator, the next step is to normalize these values to fit within a 0-100 scale. This step, known as min-max scaling, ensures that each indicator aligns with the Fear and Greed Index structure, where 0 represents extreme fear and 100 represents extreme greed. 
+Now that we have calculated the percentage change for each indicator, the next step is to normalize these values to fit within a 0-100 scale. This step, known as min-max scaling, ensures that each indicator aligns with the Fear and Greed Index structure, where 0 represents extreme fear and 100 represents extreme greed.
 
 ![Min Max Scale Formula](/_images/min_max_scale.png)
 
@@ -78,7 +78,7 @@ This formula takes the current value and scales it based on its position between
 
 **Step 4: Modelling the Final Fear and Greed Index**
 
-Ultimately, we will obtain the daily scaled Fear and Greed Index for each selected indicator. These individual indices will then be combined using unsupervised machine learning models to determine the weight of each indicator, resulting in the overall Fear and Greed Index for the Indonesian market. 
+Ultimately, we will obtain the daily scaled Fear and Greed Index for each selected indicator. These individual indices will then be combined using unsupervised machine learning models to determine the weight of each indicator, resulting in the overall Fear and Greed Index for the Indonesian market.
 
 Note that in our methodology, the SMA calculation often uses percentage-based scaling, so the min-max scaling should apply to these percentage values. However, for some indicators, rather than using percentage changes from the SMA, we may simply calculate the absolute distance from the SMA and scale this using relative min and max values. The next article in this series will dive deeper into the specific calculations for each index as well as unsupervised machine learning modelling.
 
@@ -90,11 +90,11 @@ To begin, we will gather the necessary input data required to calculate each of 
 
 Direct Indicators of Stock Market Sentiment:
 
-- **Market Momentum**: daily stock prices changes for IDX composite 
+- **Market Momentum**: daily stock prices changes for IDX composite
 - **Stock Price Strength**: daily closing prices of individual stocks within the IDX Composite
 - **Volatility**: daily closing prices of the IDX Composite
 - **Volume Breadth**: daily trading volume data for stocks in the IDX Composite.
-- **Safe Haven Demand**: 10 year indonesian government bond daily rate & Indonesian stock market capitalization 
+- **Safe Haven Demand**: 10 year indonesian government bond daily rate & Indonesian stock market capitalization
 
 Indirect Indicators of Macroeconomic Influence:
 
@@ -120,9 +120,9 @@ Data from external sources are linked above. In the next step, we will utilize [
 
 **Step 2: Gathering Input Data from [Sectors Financial API](https://sectors.app/api)**
 
-[Sectors Financial API](https://sectors.app/api) offers comprehensive insights into the Indonesian stock market, allowing us to efficiently access the data needed for our analysis. First we use the company API to rend the company information to identify the stock tickers. 
+[Sectors Financial API](https://sectors.app/api) offers comprehensive insights into the Indonesian stock market, allowing us to efficiently access the data needed for our analysis. First we use the company API to rend the company information to identify the stock tickers.
 
-```python 
+```python
 # Retrieve Stock index from "Companies by Index" API
 import time
 import requests
@@ -142,6 +142,7 @@ response_company_index = requests.get(url, headers=headers)
 
 print(response_company_index.text)
 ```
+
 We will see the result of a list of response below.
 
 ```json
@@ -161,6 +162,7 @@ We will see the result of a list of response below.
   ...
 ]
 ```
+
 We will now use the “Daily Transaction Data” API and create a function that loops through company tickers to retrieve the historical market data for the IDX Composite.
 
 ```python
@@ -193,30 +195,31 @@ for i, x in enumerate(response_company_index.json()):
   history_idx30.append(response_daily_transaction_data.json())
 
   time.sleep(1)
-  ```
-  Now if we check the result historical IDX30 data, we will have all the information we need. 
+```
 
-  ```json
+Now if we check the result historical IDX30 data, we will have all the information we need.
+
+```json
 
 [[{'symbol': 'ACES.JK',
-   'date': '2024-08-07',
-   'close': 735,
-   'volume': 43056400,
-   'market_cap': 12583493959680},
-  {'symbol': 'ACES.JK',
-   'date': '2024-08-08',
-   'close': 720,
-   'volume': 52492200,
-   'market_cap': 12326688260096},
-  {'symbol': 'ACES.JK',
-   'date': '2024-08-09',
-   'close': 720,
-   'volume': 55467000,
-   'market_cap': 12326688260096},
+ 'date': '2024-08-07',
+ 'close': 735,
+ 'volume': 43056400,
+ 'market_cap': 12583493959680},
+{'symbol': 'ACES.JK',
+ 'date': '2024-08-08',
+ 'close': 720,
+ 'volume': 52492200,
+ 'market_cap': 12326688260096},
+{'symbol': 'ACES.JK',
+ 'date': '2024-08-09',
+ 'close': 720,
+ 'volume': 55467000,
+ 'market_cap': 12326688260096},
 ...
 ]]
 
-  ```
+```
 
 **Step 3 Scraping External Data and Storing inside database**
 
@@ -225,16 +228,3 @@ External data sources are scraped using the BeautifulSoup library, with a GitHub
 The backend data pipeline setup will be discussed in detail in a separate article.
 
 With the methodology, calculations, and data sourcing now complete, we are ready to proceed to the next part of this article, where we will begin computing the indices.
-
-
-
-
-
-
-
-
-
-
-
-
-
