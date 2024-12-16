@@ -5,10 +5,11 @@ taxonomy:
   category:
     - knowledge
     - notes
- post_tag:
+  post_tag:
     - postgres
     - json
     - database
+    - dataops
 ---
 
 ## The best of both worlds: Postgres and JSON

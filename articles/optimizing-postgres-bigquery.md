@@ -2,26 +2,26 @@
 title: "Optimizing queries in Postgres and BigQuery | Part 1 of Optimized Analytics Applications"
 post_excerpt: A whirlwind tour of query optimization strategies ft. query plans, index scans, and BigQuery-specific optimizations
 taxonomy:
-    category:
-        - knowledge
-        - notes
-    post_tag:
-        - postgres
-        - bigquery
-        - analytics
-        - database
-        - dataops
+  category:
+    - knowledge
+    - notes
+  post_tag:
+    - postgres
+    - bigquery
+    - analytics
+    - database
+    - dataops
 ---
 
 ## Key Points (_TL;DR_)
 
-1. You don't optimize queries until you've seen the Query Plan. This is your `EXPLAIN ANALYZE`. 
+1. You don't optimize queries until you've seen the Query Plan. This is your `EXPLAIN ANALYZE`.
 
 2. Sequential Scan is for when you have no other good options left. Your most common queries need to be Index Scans. This is the difference between a 14 second execution time and a 0.5 seconds execution time (99.996% improvement in performance ⚡)
 
 3. But both (1) and (2) don't work on Google BigQuery. No `EXPLAIN`, no `ANALYZE`, no index scans. Every query in BigQuery is a full table scan unless you use BigQuery's specialized optimization features.
 
-4. BigQuery compensates by adding more nodes (more parallelism) to help you achieve near constant time as your data scale. 
+4. BigQuery compensates by adding more nodes (more parallelism) to help you achieve near constant time as your data scale.
 
 5. Instead, use BigQuery's Query Execution Graph to look for bottlenecks and find optimization opportunities
 
@@ -30,14 +30,17 @@ taxonomy:
 The article contains screenshots, benchmark tests, and code snippets for each of the aforementioned points, so dive right in.
 
 ---
+
 ## Building optimized analytics applications: from Postgres to BigQuery
 
 This is the first in a series of articles on building highly optimized analytics applications. We're going to start with the basic mental model: thinking about the stack of software that makes up a modern analytics application. We'll see where bottlenecks can occur at each layer of the analytics stack, and work through some concrete examples of how to diagnose and fix them.
 
 ### Background: The analytics stack
-For the purpose of this article, we'll define the analytics stack as our collection of application layers responsible for ingesting, storing, querying, and finally an interface to the front end for search and query. Supposed the end users are business analysts relying on our web application to query for results, after they have provided a set of filters and search terms. 
+
+For the purpose of this article, we'll define the analytics stack as our collection of application layers responsible for ingesting, storing, querying, and finally an interface to the front end for search and query. Supposed the end users are business analysts relying on our web application to query for results, after they have provided a set of filters and search terms.
 
 This stack is made up of the following components:
+
 - A database for storing the data
 - A query engine for querying the data
 - A web application for querying the data
@@ -46,15 +49,17 @@ Few months into the project, our data analysts start complaining that the web ap
 
 Welps! A few discussions with the data architects and analytics engineers on the team reveal that the database might be the bottleneck. In fact, we were told, that the team is in the process of a multi-month migration from an on-premise PostgreSQL database to Google's BigQuery. The migration is still in progress, and we are asked to help diagnose the performance issues in the meantime.
 
-- PostgreSQl: the world's most advanced open source database and perhaps the most popular choice for mature startups  
-- BigQuery: Google's fully managed and highly scalable data warehouse  
+- PostgreSQl: the world's most advanced open source database and perhaps the most popular choice for mature startups
+- BigQuery: Google's fully managed and highly scalable data warehouse
 
 In the next few articles of this series, we'll look at each components of the Analytics stack in turn, and see how we can diagnose and fix performance issues. Our goal is to construct a mental model of the analytics stack, and gain an overview of the tools at our disposal at each layer of the stack. We'll start with the database (focusing on on-premise databases, and then later BigQuery), and work our way up to the web analytics application layer.
 
 ### Migrating our database: PostgreSQL to BigQuery
+
 At the bottom of our analytics stack is the database. Currently it is the trusty PostgreSQL database responsible for storing the data, and providing a query interface for querying the data. Being the most fundamental component of the analytics stack, it is naturally the first place to look when diagnosing performance issues.
 
 Fortunately for us, databases today are extremely well optimized. Most modern databases are designed to be fast, and are optimized for a wide variety of workloads. For the most part, troubleshooting performance issues in a database is a matter of using these provided tools, i.e.
+
 - the query planner (sometimes called the query analyzer)
 - the query optimizer (sometimes called the query executor, and sometimes it's bundled with the query planner)
 - the execution engine to diagnose the problem.
@@ -171,7 +176,7 @@ Execution time: 0.531 ms
 
 Now instead of taking ~14 seconds to return a single row, it took 0.5 seconds to return a single row. This represents a 99.996% improvement in performance.
 
-The query planner, in addition to making sure that the query is executed in the most efficient way possible, is also responsible for making sure that the query is executed in a way that is safe for the database. For example, the query planner will make sure that the query is executed in a way that does not cause a deadlock. 
+The query planner, in addition to making sure that the query is executed in the most efficient way possible, is also responsible for making sure that the query is executed in a way that is safe for the database. For example, the query planner will make sure that the query is executed in a way that does not cause a deadlock.
 
 When your analytics application is running slow independent of the interface you are using (raw queries, SQL Lab, Superset, ORM, some API client, etc.), hopping in with the `EXPLAIN` command to investigate the query plan is often a great place. If necessary, you can also use the `EXPLAIN ANALYZE VERBOSE` command to see the query plan, and the time it took to execute each step of the query plan. This will help you identify the bottleneck in your query.
 
@@ -179,7 +184,7 @@ When your analytics application is running slow independent of the interface you
 
 Many modern analytics stacks are built on top of cloud data warehouses like Google BigQuery, Amazon Redshift, and Snowflake instead of traditional, on-premise, self-hosted database servers. In those scenarios, the enterprise analytics stack might look a little different from our hypothetical stack above. The diagnostic tools and lessons are still largely applicable, even though the underlying technology might be different and the means to access these tools might differ.
 
-Let's see a concrete example with Google BigQuery, the technology of choice for our ongoing migration to a cloud data warehouse. 
+Let's see a concrete example with Google BigQuery, the technology of choice for our ongoing migration to a cloud data warehouse.
 
 With BigQuery, your diagnostic query plan and timing information is embedded within query jobs; This means that you won't be able to use the `EXPLAIN` or `EXPLAIN ANALYZE` commands explictly, as they are not supported.
 
@@ -187,10 +192,8 @@ With BigQuery, your diagnostic query plan and timing information is embedded wit
 
 Instead, if you run your queries in BigQuery's web UI, you can see the query plan and timing information in the query's **Execution Details** tab:
 
-![Query Execution BigQuery](
-/_images/queryopt_1.png
-)
-We'll see that BigQuery does a pretty remarkable job at processing 17,717,491 rows of records in under 395 milliseconds. 
+![Query Execution BigQuery](/_images/queryopt_1.png)
+We'll see that BigQuery does a pretty remarkable job at processing 17,717,491 rows of records in under 395 milliseconds.
 
 The query is as follows and it essentially prints the top search term in the US each day for the last 2 weeks:
 
@@ -213,13 +216,11 @@ ORDER BY Day DESC
 
 Since the most recent day has yet to conclude, we expect this query to return 13 rows (one for each day in the last 2 weeks minus the most recent one). We see the Elapsed time of 395 milliseconds, and how many bytes were processed. We can also see the query plan, which is a DAG (Directed Acyclic Graph) of the steps that BigQuery took to execute the query (Execution Graph tab).
 
-We observe how BigQuery breaks this query into 3 stages, and how each stage is executed in parallel. When a stage is distributed and executed in parallel, there will be a difference between the average length of the stage execution or the longest execution per stage. BigQuery's query planner will  distribute the query ("S00:Input" and "S01:Aggregate") across multiple nodes so they can be executed in parallel on each node. This query planner will then combine the results from each node, and return the final result ("S02:Ouput"). Toggling between "Show Average Time" and "Show Maximum Time" will provide a difference between the average length of the stage execution and the longest execution per stage.
+We observe how BigQuery breaks this query into 3 stages, and how each stage is executed in parallel. When a stage is distributed and executed in parallel, there will be a difference between the average length of the stage execution or the longest execution per stage. BigQuery's query planner will distribute the query ("S00:Input" and "S01:Aggregate") across multiple nodes so they can be executed in parallel on each node. This query planner will then combine the results from each node, and return the final result ("S02:Ouput"). Toggling between "Show Average Time" and "Show Maximum Time" will provide a difference between the average length of the stage execution and the longest execution per stage.
 
-In each stage, we can observe from the Execution Details and from the Execution Graph the number of records that it takes as input, and the number of records that it outputs. 
+In each stage, we can observe from the Execution Details and from the Execution Graph the number of records that it takes as input, and the number of records that it outputs.
 
-![Query Execution BigQuery](
-/_images/queryopt_2.png
-)
+![Query Execution BigQuery](/_images/queryopt_2.png)
 
 - In S00:Input, becase of the `FROM bigquery-public-data.google_trends.top_terms` clause, BigQuery will read 17,717,491 rows from the table. But because of the `GROUP BY` `WHERE rank = 1 AND refresh_date > DATE_SUB(CURRENT_DATE(), INTERVAL 2 WEEK)` clause, BigQuery will filter out everything except the 13 rows that meet the criteria. Unsurprisingly, the Read and Compute time are also longest here.
 
@@ -227,7 +228,7 @@ In each stage, we can observe from the Execution Details and from the Execution 
 
 In essence, from an optimization point of view there are a couple of things you want to keep an eye on when looking at this query plan:
 
-- the less bytes a phase has to process, the faster it will be. This in part explains why the Input phase is typically the longest in a classic ETL pipeline. 
+- the less bytes a phase has to process, the faster it will be. This in part explains why the Input phase is typically the longest in a classic ETL pipeline.
 - the amount of bytes that are shuffled between nodes is also a good indicator of how much data is being processed. If there is a bottleneck here, you will want to consult with your cloud architect to make sure that your data is partitioned and clustered properly.
 - In each phase, you should be looking also at the number of records that are being processed; This often presents opportunities to optimize your query. For example, you may want to re-arrange your query to filter out records that you don't need before you perform a `GROUP BY` or `JOIN` operation.
 - In terms of time spent, click away from "Show Average Time" to "Show Maximum Time" as well to reveal the longest execution time in each phase. This again presents opportunity to optimize your query
@@ -236,27 +237,28 @@ If you're a developer, you can also access the query plan and timing information
 
 Finally, I'd like the point out that most data warehouses, BigQuery included, have a query optimizer that will automatically optimize your query for you. This is a great feature, but it's important to understand how it works so that you can make sure that it's doing what you expect it to do. Additionally, just like the handy `--dry-run` option in PostgreSQL, BigQuery also has a `--dry-run` option (or `dry_run=True` parameter when using the Python client) that will run your query, but will not actually execute it. This is a great way to test out your query and make sure that it's doing what you expect it to do, and that the time it will take to execute is what you expect it to be, before actually running it and incurring any costs.
 
-The dry run feature is enabled by default in BigQuery's web UI, and you can see the amount of data that the query will process automatically even before you execute it. 
+The dry run feature is enabled by default in BigQuery's web UI, and you can see the amount of data that the query will process automatically even before you execute it.
 
 #### What about the aforementioned Index scans?
 
-Depending on the underlying database architecture, your data warehouse may not support index scans. This varies from database to database, and might be a little out of scope for this post. 
+Depending on the underlying database architecture, your data warehouse may not support index scans. This varies from database to database, and might be a little out of scope for this post.
 
 BigQuery does not support indexes, and every query is a full table scan. The advantage is that you do not have to maintain a separate index table, or hiring a database consultant to plan out your indexing strategy, and you don't have to worry about the query optimizer not using the index that you think it should be using. The disadvantage is that
+
 - you have to be mindful of the size of your tables, and of course, the size of your queries
-- the optimization will be done for you, but the underlying storage systems may feel like a black box. 
+- the optimization will be done for you, but the underlying storage systems may feel like a black box.
 
 Where we can reach for trusty optimization techniques like indexing with out PostgreSQL, our post-migration options for active optimization will be limited (due to the black box nature of BigQuery's built-in query optimizer). In exchange of that loss in flexibility, BigQuery offers a more direct solution: adding more nodes to your cluster to increase the amount of parallelism that your query can take advantage of.
 
 #### Speeding up your queries with Clustered Tables and Partitioned Tables in BigQuery
 
-BigQuery also introduces its own innovation, known as the Clustered Tables. Supposed the data analysts on our team are primarily querying for shipment status by date and country, we can create a table that is clustered by `date` and `country` to optimize for these queries. 
+BigQuery also introduces its own innovation, known as the Clustered Tables. Supposed the data analysts on our team are primarily querying for shipment status by date and country, we can create a table that is clustered by `date` and `country` to optimize for these queries.
 
 ![](/_images/queryopt_3.png)
 
 This will allow BigQuery to optimize for these queries, but will not allow us to optimize for queries that are not clustered by `date` and `country`. A design decision like these are typically made by the data architects in relation to the queries that are being run by the data analysts and business users. It's also a reason why at Supertype we advocate for a full-cycle approach to building and scaling data architectures for our clients.
 
-Running some benchmarks using the same query on a Clustered Table and a non-Clustered Table, we yield the same result but with significantly different query times and costs. 
+Running some benchmarks using the same query on a Clustered Table and a non-Clustered Table, we yield the same result but with significantly different query times and costs.
 
 ![](/_images/queryopt_4.png)
 
