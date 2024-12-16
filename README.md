@@ -15,7 +15,7 @@ Any articles in Markdown format (`.md`), in the `/articles` subdirectory, will b
 
 This automation considers the file name as the post slug i.e if the name of the file is `data-science-101.md` then the post slug is `/notes/data-science-101`.
 
-### Taxonomy/Categories
+### Taxonomy/Categories and Tags
 
 You can have more than one category for a post. You should use them correctly. For the most part, this would be at least `knowledge` and `notes`. Very rarely would you use `internal-guides` for internal documentation that are OK for public consumption.
 
@@ -25,6 +25,13 @@ taxonomy:
     - knowledge
     # - internal-guides
     - notes
+  post_tag:
+    # Add tags that are relevant to the post
+    - postgres
+    - bigquery
+    - analytics
+    - database
+    - dataops
 ```
 
 ### Folder
