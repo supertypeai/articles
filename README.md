@@ -1,5 +1,7 @@
 # Articles
 
+> ⚠️ There is now a new publishing flow on Supertype.ai/notes. You should write directly to the `ssite` repository (markdown, and put them in `/content/notes/`) and use this repository only for image storage and serving. 
+
 This repository provides a publishing gateway to our [website](https://supertype.ai)
 
 Any articles in Markdown format (`.md`), in the `/articles` subdirectory, will be published to the website's [Article](https://supertype.ai/notes) section.
@@ -33,14 +35,6 @@ taxonomy:
     - database
     - dataops
 ```
-
-### Folder
-
-Alternatively, for every folder present in the repository, a post will be created. The content of the folder post will be taken from the `index.md` file present under the directory.
-
-## Reference
-
-For more details on using images, YAML headers, relative links etc, please refer to the plugin author's documentation: https://www.aakashweb.com/docs/git-it-write/writing-posts/
 
 ## Tips on Writing
 
